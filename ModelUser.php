@@ -3,7 +3,7 @@
 include('./bdd.php');
 class ModelUser extends BaseModel {
     // Méthode pour enregistrer un utilisateur
-    public function register($nom, $prenom, $email, $password, $telephone) {
+    public function inscription($nom, $prenom, $email, $password, $telephone) {
         $stmt = $this->bdd->prepare("INSERT INTO UTILISATEURS (roles, nom, prenom, email, pass, telephone) VALUES ('client', :nom, :prenom, :email, :password, :telephone)");
         $stmt->execute([
             'nom' => $nom,

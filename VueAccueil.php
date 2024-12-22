@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil</title>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-</head>
-<body>
+<!-- VueAccueil.php-->
     <?php include 'VueNavbar.php'; renderNavbar(); ?>
     <div class="container my-5">
         <h1 class="text-center">Bienvenue sur notre Hôtel</h1>
@@ -36,5 +28,4 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+<?php renderFooter()?>

@@ -10,12 +10,12 @@ class ControllerUser {
     }
 
     // Inscription d'un utilisateur
-    public function registerUser($nom, $prenom, $email, $password, $telephone) {
+    public function inscriptionUser($nom, $prenom, $email, $password, $telephone) {
         if ($this->modelUser->getUserByEmail($email)) {
             FlashMessage::set('danger', 'Cet email est déjà utilisé.');
             return false;
         }
-        $this->modelUser->register($nom, $prenom, $email, $password, $telephone);
+        $this->modelUser->inscription($nom, $prenom, $email, $password, $telephone);
         FlashMessage::set('success', 'Inscription réussie. Vous pouvez maintenant vous connecter.');
         return true;
     }
@@ -42,7 +42,7 @@ class ControllerUser {
     public function updateUser($id, $nom, $prenom, $email, $telephone) {
         $this->modelUser->updateUser($id, $nom, $prenom, $email, $telephone);
         FlashMessage::set('success', 'Mise à jour réussie.');
-    }
+    } 
 }
 
 ?>

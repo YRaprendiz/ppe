@@ -16,6 +16,9 @@ switch ($page) {
     case 'login':
         include 'VueLogin.php';
         break;
+    case 'logout':
+        include 'VueLogout.php';
+        break;
     default:
         include 'VueAccueil.php';
         break;

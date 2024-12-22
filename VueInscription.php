@@ -1,6 +1,7 @@
 <!-- VueInscription.php -->
 <?php
-include('ControllerUser.php');
+include('./VueNavbar.php');
+include('./ControllerUser.php');
 $controller = new ControllerUser();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom = $_POST['nom'];
@@ -8,15 +9,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
     $telephone = $_POST['telephone'];
-    if ($controller->registerUser($nom, $prenom, $email, $password, $telephone)) {
+    if ($controller->inscriptionUser($nom, $prenom, $email, $password, $telephone)) {
         header('Location: VueLogin.php');
         exit;
     }
 }
 ?>
 <title>Inscription</title>
-<body>
-<?php include 'VueNavbar.php'; renderNavbar(); ?>
+<?php  renderNavbar(); ?>
     <h1>Inscription</h1>
     <?php FlashMessage::display(); ?>
     <form method="POST">

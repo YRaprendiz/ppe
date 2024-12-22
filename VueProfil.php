@@ -1,8 +1,8 @@
+<!-- VueProfil.php-->
 <?php
-include ('./VueNavbar.php');
-include ('./ControllerUser.php');
-
-session_start();
+include('./VueNavbar.php');
+include('./ControllerUser.php');
+//session_start();
 
 if (!isset($_SESSION['user'])) {
     header('Location: VueLogin.php');
@@ -23,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 renderNavbar();
 ?>
-
 <div class="container my-5">
     <h1 class="text-center">Profil Utilisateur</h1>
     <?php FlashMessage::display(); ?>
@@ -47,5 +46,4 @@ renderNavbar();
         <button type="submit" class="btn btn-primary">Mettre à jour</button>
     </form>
 </div>
-
 <?php renderFooter(); ?>
