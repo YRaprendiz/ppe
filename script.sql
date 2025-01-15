@@ -85,6 +85,6 @@ CREATE TABLE COMMANDES_PRODUITS (
     FOREIGN KEY (id_produit) REFERENCES PRODUITS(id_produit)
 );
 =============================================================================================================
-projet web avec méthode de code MVC ("model", "vista" et "controls") appelé ``PPE_Hotel`` hébergé localement avec l application XAMPP sur une machine Windows avec base de données SQL appelée `ppe_hotel` avec les codes suivants
+projet web avec méthode de code MVC ("Model", "Vue" et "Controller") appelé ``PPE_Hotel`` hébergé localement avec l application XAMPP sur une machine Windows avec base de données SQL appelée `ppe_hotel` avec les codes suivants
 /bootstrap ,/images
 "bdd.php","ControllerUser.php","index.php","ModelUser.php","script.sql","VueAccueil.php","VueInscription.php","VueLogin.php","VueNavbar.php","VueProfil.php".
