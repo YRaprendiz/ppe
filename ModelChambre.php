@@ -1,5 +1,6 @@
-<?php
-
+<!--  ModelChambre.php -->
+  <?php
+include('./bdd.php');
 class ChambreModel extends BaseModel {
     // Récupérer toutes les chambres
     public function getAll() {
@@ -19,7 +20,20 @@ class ChambreModel extends BaseModel {
     
         parent::__construct();
     }
-
+    // Ajouter une chambre 
+    public function addChambre($chambres_number, $chambre_type, $prix, $status, $description = null, $image = null) {
+        $stmt = $this->bdd->prepare("INSERT INTO CHAMBRES (chambres_number, chambre_type, prix, status, description, image) 
+                                     VALUES (:chambres_number, :chambre_type, :prix, :status, :description, :image)");
+        $stmt->execute([
+            'chambres_number' => $chambres_number,
+            'chambre_type' => $chambre_type,
+            'prix' => $prix,
+            'status' => $status,
+            'description' => $description,
+            'image' => $image
+        ]);
+    }
+    
 
 }
 ?>

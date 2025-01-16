@@ -38,6 +38,15 @@ class ModelUser extends BaseModel {
             'id_user' => $id
         ]);
     }
+    //role 
+    public function getRoleById($id) {
+        $stmt = $this->bdd->prepare("SELECT roles FROM UTILISATEURS WHERE id_user = :id");
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['roles'] : null;
+    }
+    
 
 }
 

@@ -17,7 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <title>Inscription</title>
 <?php  renderNavbar(); ?>
-    <h1>Inscription</h1>
+    <div class="container my-5">
+            <h1 class="text-center">Inscription</h1>
+            
     <?php FlashMessage::display(); ?>
     <form method="POST">
         <input type="text" name="nom" placeholder="Nom" required>
@@ -25,7 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="email" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Mot de passe" required>
         <input type="text" name="telephone" placeholder="Téléphone" required>
-        <button type="submit">S'inscrire</button>
+        <button type="submit" class="btn btn-primary">S'inscrire</button>
     </form>
     <p>Déjà inscrit ? <a href="index.php?page=login">Connectez-vous ici</a></p>
+    
+    </div>
 <?php renderFooter() ?>

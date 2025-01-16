@@ -5,7 +5,7 @@ class BaseModel {
 
     public function __construct() {
         try {
-            $this->bdd = new PDO('mysql:host=localhost;dbname=ppe_hotel', 'root', '');
+            $this->bdd = new PDO('mysql:host=localhost;dbname=cfainsta', 'root', '');
             $this->bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $e) {
             die('Erreur de connexion : ' . $e->getMessage());

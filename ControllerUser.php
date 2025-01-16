@@ -43,6 +43,19 @@ class ControllerUser {
         $this->modelUser->updateUser($id, $nom, $prenom, $email, $telephone);
         FlashMessage::set('success', 'Mise à jour réussie.');
     } 
+    public function isAdmin($id_user) {
+        $role = $this->model->getRoleById($id_user);
+        return $role === 'admin';
+    }
+
+    public function adminPage() {
+        if (isset($_SESSION['user_id']) && $this->isAdmin($_SESSION['user_id'])) {
+            include('./VueAdmin.php');
+        } else {
+            header('Location: index.php'); // Redirection si non autorisé
+            exit;
+        }
+    }
 }
 
 ?>

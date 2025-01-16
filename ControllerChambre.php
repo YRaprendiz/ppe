@@ -1,7 +1,7 @@
 <!-- ChambreController.php -->
 <?php
 
-include('./ModelChambre.php');
+include_once('./ModelChambre.php');
 
 class ChambreController {
     private $model;
@@ -38,5 +38,11 @@ class ChambreController {
         }
         return $chambre;
     }
+    // add une chambre
+    public function add($chambres_number, $chambre_type, $prix, $status, $description = null, $image = null) {
+        $this->model->addChambre($chambres_number, $chambre_type, $prix, $status, $description, $image);
+        $this->setFlashMessage('success', 'Chambre ajoutée avec succès.');
+    }
+    
 }
 ?>

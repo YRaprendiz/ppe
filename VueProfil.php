@@ -2,7 +2,6 @@
 <?php
 include('./VueNavbar.php');
 include('./ControllerUser.php');
-//session_start();
 
 if (!isset($_SESSION['user'])) {
     header('Location: VueLogin.php');

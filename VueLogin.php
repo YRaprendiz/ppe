@@ -6,13 +6,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
     if ($controller->loginUser($email, $password)) {
-        header('Location: VueProfil.php');
+        header('Location: index.php');
         exit;
     }
 }
 ?>
+
 <title>Connexion</title>
 <?php include ('./VueNavbar.php'); renderNavbar(); ?>
+<div class="container my-5">
     <h1>Connexion</h1>
     <?php FlashMessage::display(); ?>
     <form method="POST">
@@ -21,5 +23,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit">Se connecter</button>
     </form>
     <p><a href="VueInscription.php">Créer un compte</a></p>
-</body>
-</html>
+</div>
