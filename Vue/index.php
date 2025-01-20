@@ -3,7 +3,7 @@
 $page = isset($_GET['page']) ? $_GET['page'] : 'accueil';
 switch ($page) {
     case 'accueil':
-        include ('Vue/Accueil.php');
+        include ('Accueil.php');
         break;
     case 'admin':
             include ('VueAdmin.php');

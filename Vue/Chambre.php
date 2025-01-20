@@ -1,7 +1,7 @@
 <!--  VueChambre.php -->
   <?php
-include('./ControllerChambre.php');
-include 'VueNavbar.php'; renderNavbar();
+include('../Controller/Chambre.php');
+include 'VueNavbar.php';
 $controller = new ChambreController();
 $chambres = $controller->list();
 ?>
@@ -36,5 +36,5 @@ $chambres = $controller->list();
     
     </div>
 <?php
-renderFooter()
+renderFooter();
 ?>

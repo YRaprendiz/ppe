@@ -1,5 +1,63 @@
-<!--  ControllerUser.php -->
+<!-- ControllerUser.php -->
 <?php
+// ControllerUser.php - Contrôleur pour gérer l'authentification
+include('../Model/User.php');
+include('../bdd.php');
+
+if (isset($_POST['action'])) {
+    $UtilisateurController = new UtilisateurController($bdd);
+    switch ($_POST['action']) {
+        case 'inscription':
+            $UtilisateurController->create();
+            break;
+        case 'login':
+            $UtilisateurController->login();
+            break;
+        default:
+            echo "Action inconnue.";
+            break;
+    }
+}
+
+class UtilisateurController {
+    private $utilisateur;
+
+    public function __construct($bdd) {
+        $this->utilisateur = new Utilisateur($bdd);
+    }
+
+    public function create() {
+        $this->utilisateur->ajouterUtilisateur(
+            $_POST['nom'],
+            $_POST['prenom'],
+            $_POST['email'],
+            $_POST['password'],
+            'client' // Rôle par défaut
+        );
+        header('Location: index.php');
+    }
+
+    public function login() {
+        $user = $this->utilisateur->checkLogin($_POST['email'], $_POST['password']);
+        if ($user) {
+            session_start();
+            $_SESSION['user'] = $user;
+            header('Location: index.php'); // Page d'accueil après connexion
+        } else {
+            header('Location: index.php');
+        }
+    }
+    // Récupérer toutes les Users
+    public function list() {
+        $User = $this->utilisateur->getAll();
+        return $User;
+    }
+
+
+}
+?>
+
+<!--  ControllerUser.php 
 include('./ModelUser.php');
 
 class ControllerUser {
@@ -57,5 +115,4 @@ class ControllerUser {
         }
     }
 }
-
-?>
+-->

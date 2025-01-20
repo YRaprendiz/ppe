@@ -1,4 +1,4 @@
-<!-- ChambreController.php -->
+<!-- ControllerChambre.php -->
 <?php
 
 include_once('./ModelChambre.php');
