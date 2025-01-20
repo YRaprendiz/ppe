@@ -1,7 +1,8 @@
 <!--  VueChambre.php -->
   <?php
+include 'Navbar.php';
 include('../Controller/Chambre.php');
-include 'VueNavbar.php';
+
 $controller = new ChambreController();
 $chambres = $controller->list();
 ?>

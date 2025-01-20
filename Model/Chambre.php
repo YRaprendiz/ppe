@@ -1,6 +1,6 @@
 <!--  ModelChambre.php -->
   <?php
-//include('./bdd.php');
+//include('./bdd.php');//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class BaseModel {
     public $bdd;
 
@@ -20,6 +20,7 @@ class FlashMessage {
             session_start();
         }
         $_SESSION['flash'] = [            'type' => $type,            'message' => $message        ];
+        die();
     }
 
     public static function display() {
@@ -32,9 +33,10 @@ class FlashMessage {
             echo "<div class='alert alert-{$type} text-center'>{$message}</div>";
             unset($_SESSION['flash']);
         }
+        die();
     }
 }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class ChambreModel extends BaseModel {
     // Récupérer toutes les chambres
     public function getAll() {
@@ -66,6 +68,7 @@ class ChambreModel extends BaseModel {
             'description' => $description,
             'image' => $image
         ]);
+        die;
     }
     
 

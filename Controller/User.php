@@ -2,7 +2,7 @@
 <?php
 // ControllerUser.php - Contrôleur pour gérer l'authentification
 include('../Model/User.php');
-include('../bdd.php');
+//include('./Bdd/bdd.php');
 
 if (isset($_POST['action'])) {
     $UtilisateurController = new UtilisateurController($bdd);
@@ -34,7 +34,7 @@ class UtilisateurController {
             $_POST['password'],
             'client' // Rôle par défaut
         );
-        header('Location: index.php');
+        header('Location: ./index.php');
     }
 
     public function login() {
@@ -44,7 +44,7 @@ class UtilisateurController {
             $_SESSION['user'] = $user;
             header('Location: index.php'); // Page d'accueil après connexion
         } else {
-            header('Location: index.php');
+            header('Location: ./index.php');
         }
     }
     // Récupérer toutes les Users

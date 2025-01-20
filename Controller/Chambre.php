@@ -1,7 +1,7 @@
 <!-- ControllerChambre.php -->
 <?php
 
-include_once('./ModelChambre.php');
+include('../Controller/Chambre.php');
 
 class ChambreController {
     private $model;

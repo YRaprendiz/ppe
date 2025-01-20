@@ -1,5 +1,5 @@
 <?php
-// database.php - Configuration de la base de données
+// Bdd/bdd.php - Configuration de la base de données
 try {
     $user = "root"; // Nom d'utilisateur de la base de données
     $pass = "";    // Mot de passe de la base de données
