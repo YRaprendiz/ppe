@@ -1,79 +1,87 @@
+<!-- ChambreController.php-->
 <?php
-include('../Model/ChambreModel.php');
-include('../Bdd/bdd.php');
+include ('./Bdd/bdd.php');
+include ('./Model/ChambreModel.php');
+class ChambresController {
+    private $model;
 
-class ChambreController {
-    private $chambreModel;
-
-    public function __construct($bdd) {
-        $this->chambreModel = new ChambreModel($bdd);
+    public function __construct($model) {
+        $this->model = $model;
     }
 
     public function handleRequest() {
+        session_start();
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $action = $_POST['action'] ?? null;
+            if (isset($_POST['action'])) {
+                switch ($_POST['action']) {
+                    case 'add':
+                        $this->addChambre($_POST);
+                        break;
+                    case 'update':
+                        $this->updateChambre($_POST);
+                        break;
+                    case 'delete':
+                        $this->deleteChambre($_POST['id']);
+                        break;
+                    case 'show ':
+                        $this->showChambres($_POST);
+                        break;
+                    case 'getChambre':
+                        $this->getChambreById($_POST['id']);
+                        break;
+                    case 'getAll':
+                        $this->getAllChambres();
+                        break;
 
-            switch ($action) {
-                case 'ajouter':
-                    $this->ajouterChambre();
-                    break;
-                case 'modifier':
-                    $this->modifierChambre();
-                    break;
-                case 'supprimer':
-                    $this->supprimerChambre();
-                    break;
-                default:
-                    header('Location: ../index.php?page=chambres');
-                    break;
+                    default:
+                            echo "Action non reconnue.";
+                            break;        
+                }
             }
+        } else {
+            $this->showChambres();
         }
     }
 
-    private function ajouterChambre() {
-        if (isset($_FILES['image']['tmp_name'], $_POST['chambreCode'], $_POST['type'], $_POST['prix'], $_POST['descriptif'])) {
-            $image = file_get_contents($_FILES['image']['tmp_name']);
-            $chambreCode = htmlspecialchars($_POST['chambreCode']);
-            $type = $_POST['type'];
-            $prix = (float)$_POST['prix'];
-            $descriptif = htmlspecialchars($_POST['descriptif']);
-
-            if ($this->chambreModel->ajouterChambre($image, $chambreCode, $type, $prix, $descriptif)) {
-                header('Location: ../index.php?page=chambres&message=Chambre ajoutée avec succès');
+    private function addChambre($data) {
+        if ($_SESSION['user']['User_role'] === 'Admin') {
+            if ($this->model->addChambre($data)) {
+                echo "Chambre ajoutée avec succès.";
             } else {
-                header('Location: ../index.php?page=chambres&error=Erreur lors de l\'ajout');
+                echo "Échec de l'ajout de la chambre.";
             }
+        } else {
+            echo "Accès refusé.";
         }
     }
 
-    private function modifierChambre() {
-        if (isset($_POST['id'], $_POST['type'], $_POST['prix'], $_POST['descriptif'])) {
-            $id = (int)$_POST['id'];
-            $type = $_POST['type'];
-            $prix = (float)$_POST['prix'];
-            $descriptif = htmlspecialchars($_POST['descriptif']);
-
-            if ($this->chambreModel->modifierChambre($id, $type, $prix, $descriptif)) {
-                header('Location: ../index.php?page=chambres&message=Chambre modifiée avec succès');
+    private function updateChambre($data) {
+        if ($_SESSION['user']['User_role'] === 'Admin') {
+            if ($this->model->updateChambre($data['id'], $data)) {
+                echo "Chambre modifiée avec succès.";
             } else {
-                header('Location: ../index.php?page=chambres&error=Erreur lors de la modification');
+                echo "Échec de la modification de la chambre.";
             }
+        } else {
+            echo "Accès refusé.";
         }
     }
 
-    private function supprimerChambre() {
-        if (isset($_POST['id'])) {
-            $id = (int)$_POST['id'];
-
-            if ($this->chambreModel->supprimerChambre($id)) {
-                header('Location: ../index.php?page=chambres&message=Chambre supprimée avec succès');
+    private function deleteChambre($id) {
+        if ($_SESSION['user']['User_role'] === 'Admin') {
+            if ($this->model->deleteChambre($id)) {
+                echo "Chambre supprimée avec succès.";
             } else {
-                header('Location: ../index.php?page=chambres&error=Erreur lors de la suppression');
+                echo "Échec de la suppression de la chambre.";
             }
+        } else {
+            echo "Accès refusé.";
         }
+    }
+
+    private function showChambres() {
+        $chambres = $this->model->getAllChambres();
+        include('../Vue/ChambresView.php');
     }
 }
-
-$controller = new ChambreController($bdd);
-$controller->handleRequest();
-?>

@@ -14,7 +14,15 @@ if (isset($_POST['action'])) {
 		case 'login':
 			$UtilisateurController->login();
 			break;
-		
+		case 'listUsers':
+			$UtilisateurController->listUsers();
+			break;
+		case 'getProfile':
+			$UtilisateurController->getProfile();
+			break;
+		case 'updateProfile':
+			$UtilisateurController->updateProfile();
+			break;
 		default:
 			# code...
 			break;
@@ -35,8 +43,12 @@ class UtilisateurController
 
 	public function create()
 	{
-		$this->utilisateur->ajouterUtilisateur($_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['password']);
-
+		$this->utilisateur->ajouterUtilisateur(
+			$_POST['nom'],
+			 $_POST['prenom'],
+			  $_POST['email'],
+			   $_POST['password']
+			);
 		header('Location:http://127.0.0.1/ppe/');
 	}
 
@@ -51,10 +63,26 @@ class UtilisateurController
 		session_start();
 		$_SESSION['user'] = $user;
 
-		header('Location:http://127.0.0.1/ppe/');
-	}
+		header('Location: http://127.0.0.1/ppe/');
+	}else {header('Location: http://127.0.0.1/ppe/404.php');}
 
 	}
+	
+	public function listUsers()
+    {
+        return $this->utilisateur->getAllUsers();
+    }
+	////
+	public function getProfile($id)
+{
+    return $this->utilisateur->getUtilisateurById($id);
+}
+
+public function updateProfile($id, $nom, $prenom, $email, $mdp = null)
+{
+    $this->utilisateur->updateUtilisateur($id, $nom, $prenom, $email, $mdp);
+    header('Location: /ppe/profile.php?message=Profil mis à jour avec succès');
+}
 }
 
 

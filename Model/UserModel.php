@@ -1,6 +1,4 @@
-
-<!-- Model/ UserModel.php          -->
-
+<!-- Model/UserModel.php          -->
 <?php 
 class Utilisateur
 {
@@ -40,12 +38,39 @@ class Utilisateur
 
 	}
 
-	public function ajouterPhoto($image, $description) {
-		$req = $this->bdd->prepare("INSERT INTO Photos (images, description) VALUES (:images, :description)");
-		$req->bindParam(':images', $image, PDO::PARAM_LOB); // Utilisation de longblob
-		$req->bindParam(':description', $description);
-		return $req->execute();
-	}
+	public function getUtilisateurById($id) {
+        $stmt = $this->bdd->prepare("SELECT * FROM Utilisateurs WHERE ID_Utilisateur = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+	public function getAllUsers()
+    {
+        $req = $this->bdd->query("SELECT * FROM Utilisateurs");
+        return $req->fetchAll();
+    }
+	////
+	public function updateUtilisateur($id, $nom, $prenom, $email, $mdp = null)
+	{
+    if ($mdp) {
+        $hashPassword = password_hash($mdp, PASSWORD_BCRYPT);
+        $sql = "UPDATE Utilisateurs SET Nom = :nom, Prenom = :prenom, Email = :email, Mdp = :mdp WHERE ID_Utilisateur = :id";
+    } else {
+        $sql = "UPDATE Utilisateurs SET Nom = :nom, Prenom = :prenom, Email = :email WHERE ID_Utilisateur = :id";
+    }
+
+    $req = $this->bdd->prepare($sql);
+    $req->bindParam(':id', $id);
+    $req->bindParam(':nom', $nom);
+    $req->bindParam(':prenom', $prenom);
+    $req->bindParam(':email', $email);
+    if ($mdp) {
+        $req->bindParam(':mdp', $hashPassword);
+    }
+
+    return $req->execute();
+}
+
+
 	
 
 }

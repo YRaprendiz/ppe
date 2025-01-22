@@ -1,49 +1,56 @@
-<!-- ChambreModel-->
- <?php
+<!-- ChambreModel.php-->
+<?php
+include ('./Bdd/bdd.php');
+class ChambresModel {
+    private $db;
 
-class ChambreModel {
-    private $bdd;
-
-    public function __construct($bdd) {
-        $this->bdd = $bdd;
+    public function __construct($db) {
+        $this->db = $db;
     }
 
-    public function ajouterChambre($image, $chambreCode, $type, $prix, $descriptif) {
-        $req = $this->bdd->prepare("
-            INSERT INTO Chambres (Images, Chambre_000, Type_Chambre, Prix, Descriptif) 
-            VALUES (:image, :chambreCode, :type, :prix, :descriptif)
-        ");
-        $req->bindParam(':image', $image, PDO::PARAM_LOB);
-        $req->bindParam(':chambreCode', $chambreCode);
-        $req->bindParam(':type', $type);
-        $req->bindParam(':prix', $prix);
-        $req->bindParam(':descriptif', $descriptif);
-        return $req->execute();
+    public function getAllChambres() {
+        $query = "SELECT * FROM Chambres";
+        return $this->db->query($query)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function modifierChambre($id, $type, $prix, $descriptif) {
-        $req = $this->bdd->prepare("
-            UPDATE Chambres 
-            SET Type_Chambre = :type, Prix = :prix, Descriptif = :descriptif 
-            WHERE ID_Chambres = :id
-        ");
-        $req->bindParam(':id', $id, PDO::PARAM_INT);
-        $req->bindParam(':type', $type);
-        $req->bindParam(':prix', $prix);
-        $req->bindParam(':descriptif', $descriptif);
-        return $req->execute();
+    public function getChambreById($id) {
+        $stmt = $this->db->prepare("SELECT * FROM Chambres WHERE ID_Chambres = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function supprimerChambre($id) {
-        $req = $this->bdd->prepare("DELETE FROM Chambres WHERE ID_Chambres = :id");
-        $req->bindParam(':id', $id, PDO::PARAM_INT);
-        return $req->execute();
+    public function addChambre($data) {
+        $stmt = $this->db->prepare(
+            "INSERT INTO Chambres (Images, Chambre_000, Type_Chambre, Stat, Prix, Descriptif) 
+             VALUES (?, ?, ?, ?, ?, ?)"
+        );
+        return $stmt->execute([
+            $data['Images'],
+            $data['Chambre_000'],
+            $data['Type_Chambre'],
+            $data['Stat'],
+            $data['Prix'],
+            $data['Descriptif']
+        ]);
     }
 
-    public function getChambres() {
-        $req = $this->bdd->prepare("SELECT * FROM Chambres");
-        $req->execute();
-        return $req->fetchAll(PDO::FETCH_ASSOC);
+    public function updateChambre($id, $data) {
+        $stmt = $this->db->prepare(
+            "UPDATE Chambres SET Images = ?, Chambre_000 = ?, Type_Chambre = ?, Stat = ?, Prix = ?, Descriptif = ? WHERE ID_Chambres = ?"
+        );
+        return $stmt->execute([
+            $data['Images'],
+            $data['Chambre_000'],
+            $data['Type_Chambre'],
+            $data['Stat'],
+            $data['Prix'],
+            $data['Descriptif'],
+            $id
+        ]);
+    }
+
+    public function deleteChambre($id) {
+        $stmt = $this->db->prepare("DELETE FROM Chambres WHERE ID_Chambres = ?");
+        return $stmt->execute([$id]);
     }
 }
-?>

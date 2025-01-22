@@ -8,13 +8,16 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'accueil';
 
 switch ($page) {
 	case 'login':
-			include('Vue/UserLogin.php');
+			include('Vue/User/UserLogin.php');
 		break;
 	case 'inscription':
-			include('Vue/UserInscription.php');
+			include('Vue/User/UserInscription.php');
+		break;
+	case 'listUsers':
+		include('Vue/User/listUsers.php');
 		break;
 	case 'profil':
-			include('Vue/UserProfil.php');
+			include('Vue/User/UserProfil.php');
 		break;
 	case 'deconnexion':
 		session_destroy();
@@ -23,32 +26,26 @@ switch ($page) {
 		break;
 
 	case 'photos':
-		include('Vue/PhotoForm.php');
+		include('Vue/Photo/PhotoForm.php');
+		break;
+	case 'photosList':
+		include('Vue/Photo/PhotoList.php');
+		break;
+		
+	case 'chambreForm':
+		include('Vue/Chambre/ChambreForm.php');
+		break;
+	case 'chambresList':
+		include('./Vue/Chambre/ChambresList.php');
 		break;
 
-	case 'chambresView':
-		include('./Vue/ChambresView.php');
-		break;
-	case 'ajouterChambre':
-		include('Vue/ChambreForm.php');
-		break;
-
-	case 'ModifierChambre':
-		include('./Vue/ModifierChambreView.php');
-		break;
-	case 'ReserverChambre':
+	case 'reserverChambre':
 			include('./Vue/ReserverChambreView.php');
 			break;
 
 	case '404':
 			include('404.php');
 			break;
-
-	case 'reservations':
-		include('Controller/ChambreController.php');
-		$controller = new ChambreController($bdd); // Instanciez le contrôleur
-		include('Vue/ReservationList.php'); // Chargez la vue des réservations
-		break;
 	
 	default:
 			include('Vue/accueil.php');
