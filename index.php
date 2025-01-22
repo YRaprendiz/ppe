@@ -1,37 +1,48 @@
-<!-- Index.php -->
+<!-- index.php              -->
 <?php
+session_start();
+
+include('Vue/Navbar.php');
+
 $page = isset($_GET['page']) ? $_GET['page'] : 'accueil';
+
 switch ($page) {
-    case 'accueil':
-        include ('Vue/Accueil.php');
-        break;
-    case 'admin':
-            include ('VueAdmin.php');
-            break;
-    case 'profil':
-        include ('VueProfil.php');
-        break;
-    case 'inscription':
-        include ('Inscription.php');
-        break;
-    case 'login':
-        include ('Login.php');
-        break;
-    case 'logout':
-        include ('Logout.php');
-        break;
-    case 'chambres':
-        include ('Chambre.php');
-        break;
-    case 'ChambreDetails':
-        include ('ChambreDetails.php');
-        break;
-    case 'contact':
-        include ('Contact.php');
-        break;
-                
-    default:
-        include ('Accueil.php');
-        break;
+	case 'login':
+			include('Vue/UserLogin.php');
+		break;
+	case 'inscription':
+			include('Vue/UserInscription.php');
+		break;
+	case 'profil':
+			include('Vue/UserProfil.php');
+		break;
+	case 'deconnexion':
+		session_destroy();
+		header('Location:http://127.0.0.1/ppe/');
+		exit();
+		break;
+
+	case 'photos':
+		include('Vue/PhotoForm.php');
+		break;
+
+	case 'chambres':
+		include('Vue/ChambreList.php');
+		break;
+	case 'ajouterChambre':
+		include('Vue/ChambreForm.php');
+		break;
+
+	case 'reservations':
+		include('Controller/ChambreController.php');
+		$controller = new ChambreController($bdd); // Instanciez le contrôleur
+		include('Vue/ReservationList.php'); // Chargez la vue des réservations
+		break;
+	
+	default:
+			include('Vue/accueil.php');
+		break;
 }
+include('Vue/footer.php');
+
 ?>
