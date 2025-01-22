@@ -12,8 +12,10 @@
 	<a href="index.php?page=deconnexion">deconnexion</a>
 	<a href="index.php?page=photos">ajouterPhotos</a>
 	<a href="index.php?page=ajouterChambre">ajouterChambre</a>
-	<a href="index.php?page=chambres">chambres</a>
-	<a href="index.php?page=reservations">reservations</a>
+	<a href="index.php?page=chambresView">chambres</a>
+	<a href="index.php?page=ReserverChambre">ReserverChambreView</a>
+	<a href="index.php?page=ModifierChambre">ModifierChambreView</a>
+	<a href="index.php?page=reservations">reservations??</a>
 
 	
 

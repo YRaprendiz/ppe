@@ -26,12 +26,23 @@ switch ($page) {
 		include('Vue/PhotoForm.php');
 		break;
 
-	case 'chambres':
-		include('Vue/ChambreList.php');
+	case 'chambresView':
+		include('./Vue/ChambresView.php');
 		break;
 	case 'ajouterChambre':
 		include('Vue/ChambreForm.php');
 		break;
+
+	case 'ModifierChambre':
+		include('./Vue/ModifierChambreView.php');
+		break;
+	case 'ReserverChambre':
+			include('./Vue/ReserverChambreView.php');
+			break;
+
+	case '404':
+			include('404.php');
+			break;
 
 	case 'reservations':
 		include('Controller/ChambreController.php');
