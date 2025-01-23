@@ -1,27 +1,27 @@
 <!-- Controller/UserController.php     -->
 <?php
-include('../Model/UserModel.php');
-include('../Bdd/bdd.php');
+require_once(__DIR__ . '/../Bdd/bdd.php');
+require_once(__DIR__ . '/../Model/UserModel.php');
 
 
 if (isset($_POST['action'])) {
-	$UtilisateurController = new UtilisateurController($bdd);
+	$UserController = new UserController($bdd);
 
 	switch ($_POST['action']) {
 		case 'inscription':
-			$UtilisateurController->create();
+			$UserController->create();
 			break;
 		case 'login':
-			$UtilisateurController->login();
+			$UserController->login();
 			break;
 		case 'listUsers':
-			$UtilisateurController->listUsers();
+			$UserController->listUsers();
 			break;
 		case 'getProfile':
-			$UtilisateurController->getProfile();
+			$UserController->getProfile();
 			break;
 		case 'updateProfile':
-			$UtilisateurController->updateProfile();
+			$UserController->updateProfile();
 			break;
 		default:
 			# code...
@@ -30,25 +30,21 @@ if (isset($_POST['action'])) {
 	
 }
 
-class UtilisateurController
+class UserController
 {
 
-	private $utilisateur;
+	private $userModel;
 
 	function __construct($bdd)
 	{
-		$this->utilisateur = new utilisateur($bdd);
+		$this->userModel = new UserModel($bdd);
 	}
 
 
 	public function create()
 	{
-		$this->utilisateur->ajouterUtilisateur(
-			$_POST['nom'],
-			 $_POST['prenom'],
-			  $_POST['email'],
-			   $_POST['password']
-			);
+		$this->userModel->ajouterUtilisateur($_POST['nom'],$_POST['prenom'],$_POST['email'],$_POST['password']);
+		
 		header('Location:http://127.0.0.1/ppe/');
 	}
 
@@ -56,32 +52,31 @@ class UtilisateurController
 	public function login()
 	{
 
-	$user = $this->utilisateur->checkLogin($_POST['email'], $_POST['password']);
-
+	$user = $this->userModel->checkLogin($_POST['email'], $_POST['password']);
 	
 	if ($user) {
 		session_start();
 		$_SESSION['user'] = $user;
 
 		header('Location: http://127.0.0.1/ppe/');
-	}else {header('Location: http://127.0.0.1/ppe/404.php');}
+	}
 
 	}
 	
 	public function listUsers()
     {
-        return $this->utilisateur->getAllUsers();
+        return $this->userModel->getAllUsers();
     }
 	////
 	public function getProfile($id)
 {
-    return $this->utilisateur->getUtilisateurById($id);
+    return $this->userModel->getUtilisateurById($id);
 }
 
 public function updateProfile($id, $nom, $prenom, $email, $mdp = null)
 {
-    $this->utilisateur->updateUtilisateur($id, $nom, $prenom, $email, $mdp);
-    header('Location: /ppe/profile.php?message=Profil mis à jour avec succès');
+    $this->userModel->updateUtilisateur($id, $nom, $prenom, $email, $mdp);
+    header('Location: http://127.0.0.1/ppe/');
 }
 }
 

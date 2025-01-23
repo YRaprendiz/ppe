@@ -1,87 +1,84 @@
-<!-- ChambreController.php-->
 <?php
-include ('./Bdd/bdd.php');
-include ('./Model/ChambreModel.php');
-class ChambresController {
-    private $model;
+require_once(__DIR__ . '/../Bdd/bdd.php');
+require_once(__DIR__ . '/../Model/ChambresModel.php');
 
-    public function __construct($model) {
-        $this->model = $model;
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+class ChambresController {
+    private $chambresModel;
+
+    public function __construct(PDO $bdd) {
+        $this->chambresModel = new ChambresModel($bdd);
     }
 
     public function handleRequest() {
-        session_start();
+        if (!isset($_POST['action'])) {
+            return;
+        }
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_POST['action'])) {
-                switch ($_POST['action']) {
-                    case 'add':
-                        $this->addChambre($_POST);
-                        break;
-                    case 'update':
-                        $this->updateChambre($_POST);
-                        break;
-                    case 'delete':
-                        $this->deleteChambre($_POST['id']);
-                        break;
-                    case 'show ':
-                        $this->showChambres($_POST);
-                        break;
-                    case 'getChambre':
-                        $this->getChambreById($_POST['id']);
-                        break;
-                    case 'getAll':
-                        $this->getAllChambres();
-                        break;
+        if (!$this->validateAdminAccess()) {
+            header('Location: /ppe/index.php?page=chambres&erreur=Accès refusé');
+            exit();
+        }
 
-                    default:
-                            echo "Action non reconnue.";
-                            break;        
-                }
-            }
-        } else {
-            $this->showChambres();
+        switch ($_POST['action']) {
+            case 'ajouter':
+                $this->addChambre($_POST, $_FILES);
+                break;
+            case 'modifier':
+                $this->updateChambre($_POST);
+                break;
+            case 'supprimer':
+                $this->deleteChambre($_POST['id']);
+                break;
+            default:
+                header('Location: /ppe/index.php?page=chambres&erreur=Action invalide');
+                exit();
         }
     }
 
-    private function addChambre($data) {
-        if ($_SESSION['user']['User_role'] === 'Admin') {
-            if ($this->model->addChambre($data)) {
-                echo "Chambre ajoutée avec succès.";
-            } else {
-                echo "Échec de l'ajout de la chambre.";
-            }
-        } else {
-            echo "Accès refusé.";
-        }
+    private function validateAdminAccess(): bool {
+        return isset($_SESSION['user']) && $_SESSION['user']['User_role'] === 'Admin';
     }
 
-    private function updateChambre($data) {
-        if ($_SESSION['user']['User_role'] === 'Admin') {
-            if ($this->model->updateChambre($data['id'], $data)) {
-                echo "Chambre modifiée avec succès.";
-            } else {
-                echo "Échec de la modification de la chambre.";
-            }
+    public function getAllChambres() {
+        return $this->chambresModel->getAllChambres();
+    }
+
+    private function addChambre(array $data, array $files) {
+        $result = $this->chambresModel->addChambre($data, $files);
+        if ($result) {
+            header('Location: /ppe/index.php?page=chambres&message=Chambre ajoutée avec succès');
         } else {
-            echo "Accès refusé.";
+            header('Location: /ppe/index.php?page=chambres&erreur=Erreur lors de l\'ajout de la chambre');
         }
+        exit();
+    }
+
+    private function updateChambre(array $data) {
+        $result = $this->chambresModel->updateChambre((int)$data['id'], $data);
+        if ($result) {
+            header('Location: /ppe/index.php?page=chambres&message=Chambre modifiée avec succès');
+        } else {
+            header('Location: /ppe/index.php?page=chambres&erreur=Erreur lors de la modification');
+        }
+        exit();
     }
 
     private function deleteChambre($id) {
-        if ($_SESSION['user']['User_role'] === 'Admin') {
-            if ($this->model->deleteChambre($id)) {
-                echo "Chambre supprimée avec succès.";
-            } else {
-                echo "Échec de la suppression de la chambre.";
-            }
+        $result = $this->chambresModel->deleteChambre($id);
+        if ($result) {
+            header('Location: /ppe/index.php?page=chambres&message=Chambre supprimée avec succès');
         } else {
-            echo "Accès refusé.";
+            header('Location: /ppe/index.php?page=chambres&erreur=Erreur lors de la suppression');
         }
-    }
-
-    private function showChambres() {
-        $chambres = $this->model->getAllChambres();
-        include('../Vue/ChambresView.php');
+        exit();
     }
 }
+
+// Entry point
+$controller = new ChambresController($bdd);
+$controller->handleRequest();
+?>

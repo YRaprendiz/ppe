@@ -5,22 +5,20 @@
  {
     echo '<h1>Accès refusé</h1>';
     exit();
-}
-include('./Bdd/bdd.php');
-include('./Model/ChambreModel.php');
-$chambresModel = new chambresModel($bdd);
-$chambres = $chambresModel->getAllChambres();
+ }
+require_once(__DIR__ . '/../../Bdd/bdd.php');
+require_once(__DIR__ . '/../../Controller/ChambreController.php');
 
+// Initialize controller and get all rooms
+$controller = new ChambresController($bdd);
+$chambres = $controller->getAllChambres();
 ?>
  
 <h1>Gestion des Chambres</h1>
-    <form action="../Controller/ChambreController.php" method="POST">
-        <input type="hidden" name="action" value="add">
+    <form action="/ppe/Controller/ChambreController.php" method="POST" enctype="multipart/form-data">
+        
         <label for="Images">Image :</label>
-        <input type="file" name="Images" required>
-
-        <label for="Chambre_000">Numéro Chambre :</label>
-        <input type="text" name="Chambre_000" required>
+        <input type="file" name="Images" ><!--required -->   <!-- --><br>
 
         <label for="Type_Chambre">Type :</label>
         <select name="Type_Chambre">
@@ -38,27 +36,32 @@ $chambres = $chambresModel->getAllChambres();
         </select>
 
         <label for="Prix">Prix :</label>
-        <input type="number" step="0.01" name="Prix" required>
+        <input type="number" step="0.01" name="Prix" ><!--required -->
         
         <label for="Descriptif">Descriptif :</label>
-        <textarea name="Descriptif" required></textarea>
+        <textarea name="Descriptif" ></textarea> <!-- required-->
         
+        <input type="hidden" name="action" value="add">
         <button type="submit">Ajouter Chambre</button>
     </form>
 
     <h2>Liste des Chambres</h2>
     <ul>
-        <?php foreach ($chambres as $chambre) : ?>
-            <li>
-            <img src="data:image/jpeg;base64,<?= base64_encode($chambre['Images']); ?>"alt="Photo" style="width: 100px; height: 100px;">
-                <strong><?= $chambre['Chambre_000']; ?></strong>
-                (<?= $chambre['Type_Chambre']; ?>) - <?= $chambre['Prix']; ?> €
-                
-                <form action="../Controller/ChambreController.php" method="POST" style="display:inline;">
+        <?php if ($chambres && is_array($chambres)) : ?>
+            <?php foreach ($chambres as $chambre) : ?>
+                <li>
+                    <strong><?= htmlspecialchars($chambre['ID_Chambres']); ?></strong>
+                    (<?= htmlspecialchars($chambre['Type_Chambre']); ?>) - <?= htmlspecialchars($chambre['Prix']); ?> €
+               
+                 <?php if (isset($chambre['Images']) && $chambre['Images']) : ?>
+                    <img src="data:image/jpeg;base64,<?= base64_encode($chambre['Images']); ?>"alt="Photo" style="width: 100px; height: 100px;">
+                <?php endif; ?>
+                <form action="/ppe/Controller/ChambreController.php" method="POST" style="display:inline;">
                     <input type="hidden" name="action" value="delete">
                     <input type="hidden" name="id" value="<?= $chambre['ID_Chambres']; ?>">
                     <button type="submit">Supprimer</button>
                 </form>
             </li>
         <?php endforeach; ?>
+    <?php endif; ?>
     </ul>

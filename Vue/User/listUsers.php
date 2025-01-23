@@ -3,11 +3,11 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['User_role'] !== 'Admin') {
     echo '<h1>Accès refusé</h1>';
     exit();
 }
-include('./Bdd/bdd.php');
-include('./Controller/UserController.php');
+require_once(__DIR__ . '/../../Bdd/bdd.php');
+require_once(__DIR__ . '/../../Controller/UserController.php');
 
-$UtilisateurController = new UtilisateurController($bdd);
-$users = $UtilisateurController->listUsers();
+$userController = new UserController($bdd);
+$users = $userController->listUsers();
 
 if (isset($_GET['message'])) echo '<p style="color: green;">' . htmlspecialchars($_GET['message']) . '</p>';
 if (isset($_GET['error'])) echo '<p style="color: red;">' . htmlspecialchars($_GET['error']) . '</p>';

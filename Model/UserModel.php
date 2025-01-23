@@ -1,18 +1,20 @@
 <!-- Model/UserModel.php          -->
 <?php 
-class Utilisateur
+class UserModel
 {
 	
-	function __construct($bdd)
+	private PDO $bdd;
+
+	function __construct(PDO $bdd)
 	{
 		$this->bdd = $bdd;
 	}
 
 
-	public function ajouterUtilisateur($nom, $prenom, $email, $mdp)
+	public function addUser($nom, $prenom, $email, $password)
 	{
 
-		$hashPassword = sha1($mdp);
+		$hashPassword = sha1($password);
 		$req = $this->bdd->prepare("INSERT INTO utilisateurs (Nom, Prenom, Email, Mdp) VALUES (:nom, :prenom, :email, :mdp)");
 		$req->bindParam(':nom', $nom);
 		$req->bindParam(':prenom', $prenom);
@@ -38,21 +40,21 @@ class Utilisateur
 
 	}
 
-	public function getUtilisateurById($id) {
-        $stmt = $this->bdd->prepare("SELECT * FROM Utilisateurs WHERE ID_Utilisateur = ?");
-        $stmt->execute([$id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
 	public function getAllUsers()
     {
         $req = $this->bdd->query("SELECT * FROM Utilisateurs");
         return $req->fetchAll();
     }
+	public function getUserById($id) {
+        $stmt = $this->bdd->prepare("SELECT * FROM Utilisateurs WHERE ID_Utilisateur = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 	////
-	public function updateUtilisateur($id, $nom, $prenom, $email, $mdp = null)
+	public function updateUser($id, $nom, $prenom, $email, $password = null)
 	{
-    if ($mdp) {
-        $hashPassword = password_hash($mdp, PASSWORD_BCRYPT);
+    if ($password) {
+        $hashPassword = password_hash($password, PASSWORD_BCRYPT);
         $sql = "UPDATE Utilisateurs SET Nom = :nom, Prenom = :prenom, Email = :email, Mdp = :mdp WHERE ID_Utilisateur = :id";
     } else {
         $sql = "UPDATE Utilisateurs SET Nom = :nom, Prenom = :prenom, Email = :email WHERE ID_Utilisateur = :id";
@@ -63,15 +65,11 @@ class Utilisateur
     $req->bindParam(':nom', $nom);
     $req->bindParam(':prenom', $prenom);
     $req->bindParam(':email', $email);
-    if ($mdp) {
+    if ($password) {
         $req->bindParam(':mdp', $hashPassword);
     }
 
     return $req->execute();
 }
-
-
-	
-
 }
 ?>

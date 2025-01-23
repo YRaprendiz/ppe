@@ -1,45 +1,42 @@
-CREATE DATABASE ppe_hotel;
+-- Script de création de la base de données
+CREATE DATABASE IF NOT EXISTS ppe;
+USE ppe;
 
-USE ppe_hotel;
-
-CREATE TABLE Utilisateurs (
-
-	ID_Utilisateur INT NOT NULL AUTO_INCREMENT,
-	Nom VARCHAR(50) NOT NULL,
-	Prenom VARCHAR(50) NOT NULL,
-	Email VARCHAR(100) NOT NULL UNIQUE,
-	Mdp VARCHAR(100) NOT NULL,
-	User_role ENUM('Client','Admin','Test3','Test4') NOT NULL DEFAULT 'Client' 
-	Images longblob NOT NULL,
+CREATE TABLE IF NOT EXISTS Utilisateurs (
+    ID_Utilisateur INT NOT NULL AUTO_INCREMENT,
+    Nom VARCHAR(50) NOT NULL,
+    Prenom VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) NOT NULL UNIQUE,
+    Mdp VARCHAR(255) NOT NULL,
+    User_role ENUM('Admin', 'Client') DEFAULT 'Client',
     PRIMARY KEY (ID_Utilisateur)
 );
 
-CREATE TABLE Photos (
-
-	ID_Photos INT NOT NULL AUTO_INCREMENT,
-	Images longblob NOT NULL,
-	description VARCHAR(100) NOT NULL,
-	PRIMARY KEY (ID_Photos)
+CREATE TABLE IF NOT EXISTS Photos (
+    ID_Photos INT NOT NULL AUTO_INCREMENT,
+    Images LONGBLOB NOT NULL,
+    Description VARCHAR(100) NOT NULL,
+    ID_Chambre INT,
+    PRIMARY KEY (ID_Photos)
 );
 
 CREATE TABLE IF NOT EXISTS Chambres (
-    ID_Chambres INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Images LONGBLOB NOT NULL,
-    Chambre_000 VARCHAR(50) NOT NULL UNIQUE,
-    Type_Chambre ENUM('Single', 'Double', 'Triple', 'Test4') NOT NULL,
-    Stat ENUM('Disponible', 'Réservé', 'Hors de service') DEFAULT 'Disponible',
-    Prix DECIMAL(10, 2) NOT NULL,
-    Descriptif VARCHAR(100) NOT NULL
+    ID_Chambres INT NOT NULL AUTO_INCREMENT,
+    Type_Chambre ENUM('Simple', 'Double', 'Triple', 'Suite') NOT NULL,
+    Statut ENUM('Disponible', 'Occupée', 'En maintenance') NOT NULL DEFAULT 'Disponible',
+    Prix DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (ID_Chambres)
 );
 
 CREATE TABLE IF NOT EXISTS Reservations (
-    ID_Reservation INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    ID_Chambres INT NOT NULL,
+    ID_Reservation INT NOT NULL AUTO_INCREMENT,
     ID_Utilisateur INT NOT NULL,
-    Date_Reservation DATE NOT NULL,
-    Date_CheckIn DATE NOT NULL,
-    Date_CheckOut DATE NOT NULL,
-    Statut ENUM('Confirmée', 'Annulée') DEFAULT 'Confirmée',
-    FOREIGN KEY (ID_Chambres) REFERENCES Chambres(ID_Chambres),
-    FOREIGN KEY (ID_Utilisateur) REFERENCES Utilisateurs(ID_Utilisateur)
+    ID_Chambres INT NOT NULL,
+    Date_Debut DATE NOT NULL,
+    Date_Fin DATE NOT NULL,
+    Statut_Reservation ENUM('En attente', 'Confirmée', 'Annulée') NOT NULL DEFAULT 'En attente',
+    PRIMARY KEY (ID_Reservation),
+    FOREIGN KEY (ID_Utilisateur) REFERENCES Utilisateurs(ID_Utilisateur),
+    FOREIGN KEY (ID_Chambres) REFERENCES Chambres(ID_Chambres)
+r) REFERENCES Utilisateurs(ID_Utilisateur)
 );
