@@ -9,7 +9,16 @@ class ChambresModel {
 
     public function getAllChambres(): array {
         try {
-            $stmt = $this->bdd->query("SELECT * FROM Chambres");
+            $query = "SELECT c.*, 
+                      CASE 
+                          WHEN r.ID_Reservation IS NULL OR r.Date_Fin < CURRENT_DATE THEN 1
+                          ELSE 0
+                      END as Statut
+                      FROM Chambres c
+                      LEFT JOIN Reservations r ON c.ID_Chambres = r.ID_Chambres 
+                      AND r.Date_Debut <= CURRENT_DATE 
+                      AND r.Date_Fin >= CURRENT_DATE";
+            $stmt = $this->bdd->query($query);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             error_log("Error fetching chambres: " . $e->getMessage());

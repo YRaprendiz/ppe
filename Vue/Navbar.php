@@ -22,12 +22,12 @@
                         <a class="nav-link" href="index.php?page=accueil">Accueil</a>
                     </li>
                     <?php if (!isset($_SESSION['user']) || $_SESSION['user']['User_role'] !== 'Admin'): ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php?page=photosList">Galerie Photos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php?page=chambresList">Nos Chambres</a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?page=photosList">Galerie Photos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?page=chambresList">Nos Chambres</a>
+                        </li>
                     <?php endif; ?>
                 </ul>
 
@@ -53,19 +53,28 @@
                             </li>
                         <?php endif; ?>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                Bonjour, <?php echo htmlspecialchars($_SESSION['user']['Prenom']); ?>
+                        <li class="nav-item">
+                            <span class="nav-link text-light">
+                                <?php echo htmlspecialchars($_SESSION['user']['Prenom']); ?>
                                 (<?php echo htmlspecialchars($_SESSION['user']['User_role']); ?>)
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="index.php?page=profil">Profil</a></li>
-                                <?php if ($_SESSION['user']['User_role'] === 'Client'): ?>
-                                    <li><a class="dropdown-item" href="index.php?page=reservations">Mes Réservations</a></li>
-                                <?php endif; ?>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="index.php?page=deconnexion">Déconnexion</a></li>
-                            </ul>
+                            </span>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?page=profil">Profil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?page=editProfile">Modifier Profil</a>
+                        </li>
+
+                        <?php if ($_SESSION['user']['User_role'] === 'Client'): ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.php?page=reservations">Mes Réservations</a>
+                            </li>
+                        <?php endif; ?>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?page=deconnexion">Déconnexion</a>
                         </li>
                     <?php endif; ?>
                 </ul>

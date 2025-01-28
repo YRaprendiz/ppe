@@ -1,65 +1,70 @@
 <?php
+// Check if session is not already started
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 if (!isset($_SESSION['user'])) {
-    header('Location: /ppe/index.php?page=404');
+    header('Location: /ppe/Vue/User/UserLogin.php');
     exit();
 }
 
 require_once(__DIR__ . '/../../Bdd/bdd.php');
 require_once(__DIR__ . '/../../Model/UserModel.php');
 
-$userModel = new Utilisateur($bdd);
-$user = $userModel->getUtilisateurById($_SESSION['user']['ID_Utilisateur']);
+$userModel = new UserModel($bdd);
+$user = $userModel->getUserById($_SESSION['user']['ID_Utilisateur']);
 
-if (isset($_GET['message'])) {
-    echo '<div class="alert alert-success">' . htmlspecialchars($_GET['message']) . '</div>';
-}
-if (isset($_GET['erreur'])) {
-    echo '<div class="alert alert-danger">' . htmlspecialchars($_GET['erreur']) . '</div>';
-}
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mon Profil - PPE</title>
+    <link rel="stylesheet" href="/ppe/assets/css/style.css">
+</head>
+<body>
+    <div class="profile-container">
+        <h1>Mon Profil</h1>
+        
+        <?php if (isset($_GET['success'])): ?>
+            <div class="success-message">
+                <?php echo htmlspecialchars($_GET['success']); ?>
+            </div>
+        <?php endif; ?>
 
-<div class="container mt-4">
-    <h1>Mon Profil</h1>
-    
-    <?php if ($user): ?>
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title"><?= htmlspecialchars($user['Prenom']) . ' ' . htmlspecialchars($user['Nom']) ?></h5>
-            <p class="card-text">
-                <strong>Email:</strong> <?= htmlspecialchars($user['Email']) ?><br>
-                <strong>Rôle:</strong> <?= htmlspecialchars($user['User_role']) ?>
-            </p>
-            
-            <!-- Formulaire de modification -->
-            <form action="/ppe/Controller/UserController.php" method="POST" class="mt-4">
-                <input type="hidden" name="action" value="modifier">
-                <input type="hidden" name="id" value="<?= $user['ID_Utilisateur'] ?>">
-                
-                <div class="mb-3">
-                    <label for="nom" class="form-label">Nom:</label>
-                    <input type="text" class="form-control" id="nom" name="nom" value="<?= htmlspecialchars($user['Nom']) ?>" required>
+        <?php if (isset($_GET['error'])): ?>
+            <div class="error-message">
+                <?php echo htmlspecialchars($_GET['error']); ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($user): ?>
+            <div class="profile-card">
+                <div class="profile-info">
+                    <h2><?php echo htmlspecialchars($user['Prenom'] . ' ' . $user['Nom']); ?></h2>
+                    <div class="info-group">
+                        <label>Email:</label>
+                        <span><?php echo htmlspecialchars($user['Email']); ?></span>
+                    </div>
                 </div>
-                
-                <div class="mb-3">
-                    <label for="prenom" class="form-label">Prénom:</label>
-                    <input type="text" class="form-control" id="prenom" name="prenom" value="<?= htmlspecialchars($user['Prenom']) ?>" required>
+
+                <div class="profile-actions">
+                    <a href="/ppe/Vue/User/EditProfile.php" class="btn-edit">Modifier le profil</a>
+                    <form action="/ppe/Controller/UserController.php" method="POST" style="display: inline;">
+                        <input type="hidden" name="action" value="logout">
+                        <button type="submit" class="btn-logout">Se déconnecter</button>
+                    </form>
                 </div>
-                
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email:</label>
-                    <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($user['Email']) ?>" required>
-                </div>
-                
-                <div class="mb-3">
-                    <label for="mdp" class="form-label">Nouveau mot de passe (laisser vide pour ne pas changer):</label>
-                    <input type="password" class="form-control" id="mdp" name="mdp">
-                </div>
-                
-                <button type="submit" class="btn btn-primary">Mettre à jour</button>
-            </form>
+            </div>
+        <?php else: ?>
+            <div class="error-message">
+                Utilisateur non trouvé
+            </div>
+        <?php endif; ?>
+
+        <div class="back-link">
+            <a href="/ppe/index.php">Retour à l'accueil</a>
         </div>
     </div>
-    <?php else: ?>
-        <div class="alert alert-danger">Utilisateur non trouvé.</div>
-    <?php endif; ?>
-</div>
+</body>
+</html>
