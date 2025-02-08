@@ -59,4 +59,4 @@ if (!$user) {
             </div>
         </form>
     </div>
-<p>//footer</p>
+<?php include '/xampp/htdocs/ppe/Vue/Footer.php';?>

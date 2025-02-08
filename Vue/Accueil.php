@@ -1,6 +1,7 @@
 <?php
-include('header.php');
-include ('./Model/PhotoModel.php');
+
+include('C:\xampp\htdocs\ppe\Bdd\bdd.php');
+include ('C:\xampp\htdocs\ppe\Model\PhotoModel.php');
 
 // Check if session is not already started
 if (session_status() === PHP_SESSION_NONE) {
@@ -24,7 +25,7 @@ foreach ($photos as $photo) {
     }
 }
 ?>
-    <?php include('header.php'); ?>
+<?php include('header.php'); ?>
     <div class="container my-5">
         <div class="text-center">
             <?php if (isset($_SESSION['user'])): ?>

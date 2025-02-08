@@ -1,4 +1,4 @@
-<!-- index.php              -->
+<!-- Index -->
 <?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -40,13 +40,23 @@ switch ($page) {
     case 'authInscription':
         include('./Vue/Auth/AuthInscription.php');
         break;
+    case 'login':
+        include('./Vue/Authentication/login.php');
+        break;
+    case 'logout':
+        include('./Vue/Authentication/logout.php');
+        break;
+    case 'register':
+        include('./Vue/Authentication/register.php');
+        break;
+////
     case 'authLogin':
         include('./Vue/Auth/AuthLogin.php');
         break;
     case 'authLogout':
         include('./Vue/Auth/AuthLogout.php');
         break;
-// Vue/User
+////
     case 'userChambresList':
         include('./Vue/User/UserChambresList.php');
         break;
@@ -57,13 +67,12 @@ switch ($page) {
         include('./Vue/User/UserReservationList.php');
         break;
     case 'userProfil':
-        include('./Vue/User/UserUserProfil.php');
+        include('Vue/User/UserProfil.php');
         break;
 
     default:
-        header('Location: C:\xampp\htdocs\ppe\Vue\Accueil.php');
+        header('Location: /ppe/index.php?page=404');
         exit();
 }
 
-include('Vue/Footer.php');
 ?>

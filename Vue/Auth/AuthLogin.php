@@ -48,3 +48,4 @@ $error_messages = [
             </div>
         </div>
     </div>
+<?php include('./Vue/footer.php'); ?>

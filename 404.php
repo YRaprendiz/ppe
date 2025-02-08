@@ -1,9 +1,10 @@
 <?php
 // Ensure this page is included through the main index.php
+/*
 if (!defined('404')) {
     header('Location: /ppe/index.php?page=404');
     exit();
-}
+}*/
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -56,3 +57,4 @@ if (!defined('404')) {
 
 
 </div>
+<?php include('Vue/footer.php');?>

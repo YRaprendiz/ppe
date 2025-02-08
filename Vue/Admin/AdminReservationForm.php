@@ -132,4 +132,4 @@ document.addEventListener('DOMContentLoaded', function() {
     dateFin.addEventListener('change', updatePrixTotal);
 });
 </script>
-<p>//footer</p>
+<?php include '/xampp/htdocs/ppe/Vue/Footer.php';?>

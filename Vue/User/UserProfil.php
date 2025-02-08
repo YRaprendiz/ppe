@@ -3,12 +3,12 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
+/*
 if (!isset($_SESSION['user'])) {
     header('Location: /ppe/Vue/User/UserLogin.php');
     exit();
 }
-
+*/
 require_once(__DIR__ . '/../../Bdd/bdd.php');
 require_once(__DIR__ . '/../../Model/UserModel.php');
 
@@ -60,4 +60,4 @@ $user = $userModel->getUserById($_SESSION['user']['ID_Utilisateur']);
             <a href="/ppe/index.php">Retour à l'accueil</a>
         </div>
     </div>
-<p>//footer</p>
+<?php include '/xampp/htdocs/ppe/Vue/Footer.php';?>

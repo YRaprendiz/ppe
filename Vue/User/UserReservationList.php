@@ -91,4 +91,4 @@ $reservations = $reservationModel->getReservationsByUser($_SESSION['user']['ID_U
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<p>//footer</p>
+<?php include '/xampp/htdocs/ppe/Vue/Footer.php';?>

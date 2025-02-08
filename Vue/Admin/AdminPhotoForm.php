@@ -66,4 +66,4 @@ if (isset($_GET['erreur'])) echo '<p style="color: red;">' . htmlspecialchars($_
             </div>
         <?php endforeach; ?>
     </div>
-<p>//footer</p>
+<?php include '/xampp/htdocs/ppe/Vue/Footer.php';?>

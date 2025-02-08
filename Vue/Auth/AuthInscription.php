@@ -60,4 +60,4 @@ $error_messages = [
             </div>
         </div>
     </div>
-<p>//footer</p>
+<?php include '/xampp/htdocs/ppe/Vue/Footer.php';?>

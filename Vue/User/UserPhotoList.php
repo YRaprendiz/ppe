@@ -103,4 +103,4 @@ try {
         </div>
     <?php endif; ?>
 </div>
-<p>//footer</p>
+<?php include '/xampp/htdocs/ppe/Vue/Footer.php';?>

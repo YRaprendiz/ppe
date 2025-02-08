@@ -40,4 +40,4 @@ if (isset($_GET['error'])) echo '<p style="color: red;">' . htmlspecialchars($_G
             </tr>
         <?php endforeach; ?>
     </table>
-<p>//footer</p>
+<?php include '/xampp/htdocs/ppe/Vue/Footer.php';?>

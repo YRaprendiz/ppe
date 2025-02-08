@@ -10,7 +10,7 @@ $ChambresModel = new ChambresModel($bdd);
 $chambres = $ChambresModel->getAllChambres();
 
 ?>
-<?php include('./header.php'); ?>
+<?php include('/xampp/htdocs/ppe/Vue/Header.php'); ?>
     <div class="container py-4">
         <h1>Liste des Chambres</h1>
         
@@ -65,4 +65,4 @@ $chambres = $ChambresModel->getAllChambres();
             </div>
         <?php endif; ?>
     </div>
-<p>//footer</p>
+<?php include '/xampp/htdocs/ppe/Vue/Footer.php';?>

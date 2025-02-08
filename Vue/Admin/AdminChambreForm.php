@@ -65,4 +65,4 @@ $chambres = $controller->getAllChambres();
         <?php endforeach; ?>
     <?php endif; ?>
     </ul>
-<p>//footer</p>
+<?php include '/xampp/htdocs/ppe/Vue/Footer.php';?>
