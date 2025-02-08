@@ -10,7 +10,7 @@ $ChambresModel = new ChambresModel($bdd);
 $chambres = $ChambresModel->getAllChambres();
 
 ?>
-<?php include('./Vue/header.php'); ?>
+<?php include('./header.php'); ?>
     <div class="container py-4">
         <h1>Liste des Chambres</h1>
         

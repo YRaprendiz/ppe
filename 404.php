@@ -1,6 +1,6 @@
 <?php
 // Ensure this page is included through the main index.php
-if (!defined('INCLUDED_FROM_INDEX')) {
+if (!defined('404')) {
     header('Location: /ppe/index.php?page=404');
     exit();
 }

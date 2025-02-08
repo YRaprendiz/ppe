@@ -7,107 +7,61 @@ if (session_status() === PHP_SESSION_NONE) {
 $page = isset($_GET['page']) ? $_GET['page'] : 'accueil';
 
 switch ($page) {
-    // Pages publiques
-    case 'accueil':
-        require('Vue/Accueil.php');
-        break;
-        
-    case 'Login':
-        include('Vue/User/UserLogin.php');
-        break;
-
-    case 'register':
-        include('Vue/User/UserRegister.php');
-        break;
-
-    case 'photosList':
-        include('Vue/Photo/PhotoList.php');
-        break;
-
-    case 'chambresList':
-        include('Vue/Chambre/ChambresList.php');
-        break;
-
-    // Pages administrateur
-    case 'chambreForm':
-        include('Vue/Chambre/ChambreForm.php');
-        break;
-
-    case 'addChambre':
-        include('Vue/Chambre/AddChambre.php');
-        break;
-
-    case 'photoForm':
-        include('Vue/Photo/PhotoForm.php');
-        break;
-
-    case 'editProfile':
-        include('Vue/User/EditProfile.php');
-        break;
-
-    case 'listUser':
-        include('Vue/User/ListUser.php');
-        break;
-
-    case 'chambreDetails':
-        include('Vue/Chambre/ChambreDetails.php');
-        break;
-
-    case 'photoGallery':
-        include('Vue/Photo/PhotoGallery.php');
-        break;
-
-    case 'userSettings':
-        include('Vue/User/UserSettings.php');
-        break;
-
-    case 'adminPanel':
-        include('Vue/Admin/AdminPanel.php');
-        break;
-
-    case 'siteMap':
-        include('Vue/SiteMap.php');
-        break;
-
-    // Pages utilisateur
-    case 'profil':
-        include('Vue/User/UserProfil.php');
-        break;
-
-    case 'modifierProfile':
-        include('Vue/User/EditProfile.php');
-        break;
-
-    // Pages client
-    case 'reservations':
-        include('Vue/Reservation/ReservationList.php');
-        break;
-
-    case 'reservation':
-        include('Vue/Reservation/ReservationForm.php');
-        break;
-
-    // DéLogin
-    case 'Exit':
-        session_destroy();
-        header('Location: /ppe/');
-        exit();
-        break;
-    case 'logout':
-        include('Vue/User/UserLogout.php');
-        break;
-    //nav bar
-    case 'header':
-        include('Vue/header.php');
-        break;
-
-    // Page d'erreur
+// VuePublic
     case '404':
         include('404.php');
         break;
+    case 'accueil':
+        include('./Vue/Accueil.php');
+        break;
+    case 'header':
+        include('./Vue/header.php');
+        break;
+    case 'footer':
+        include('./Vue/Vue/footer.php');
+        break;
+// Vue/Admin
+    case 'adminChambreForm':
+        include('./Vue/Admin/AdminChambreForm.php');
+        break;
+    case 'adminEditProfile':
+        include('./Vue/Admin/AdminEditProfile.php');
+        break;
+    case 'adminListUser':
+        include('./Vue/Admin/AdminListUser.php');
+        break;
+    case 'adminPhotoForm':
+        include('./Vue/Admin/AdminPhotoForm.php');
+        break;
+    case 'adminReservationForm':
+        include('./Vue/Admin/AdminReservationForm.php');
+        break;
+// Vue/Auth
+    case 'authInscription':
+        include('./Vue/Auth/AuthInscription.php');
+        break;
+    case 'authLogin':
+        include('./Vue/Auth/AuthLogin.php');
+        break;
+    case 'authLogout':
+        include('./Vue/Auth/AuthLogout.php');
+        break;
+// Vue/User
+    case 'userChambresList':
+        include('./Vue/User/UserChambresList.php');
+        break;
+    case 'userPhotoList':
+        include('./Vue/User/UserPhotoList.php');
+        break;
+    case 'userReservationList':
+        include('./Vue/User/UserReservationList.php');
+        break;
+    case 'userProfil':
+        include('./Vue/User/UserUserProfil.php');
+        break;
 
     default:
-        header('Location: /ppe/index.php?page=404');
+        header('Location: C:\xampp\htdocs\ppe\Vue\Accueil.php');
         exit();
 }
 

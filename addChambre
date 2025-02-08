@@ -129,3 +129,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit">Ajouter Chambre</button>
     </form>
 <p>//footer</p>
+</body>
+</html>

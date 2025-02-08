@@ -1,6 +1,6 @@
 <?php
-include('./Bdd/bdd.php');
-require_once(__DIR__ . '/../Model/PhotoModel.php');
+include('header.php');
+include ('./Model/PhotoModel.php');
 
 // Check if session is not already started
 if (session_status() === PHP_SESSION_NONE) {
@@ -24,8 +24,18 @@ foreach ($photos as $photo) {
     }
 }
 ?>
-<?php include('header.php'); ?>
+    <?php include('header.php'); ?>
+    <div class="container my-5">
+        <div class="text-center">
+            <?php if (isset($_SESSION['user'])): ?>
+                <h1 style color="blue">Bienvenu ! Vous êtes connecté comme <?php echo htmlspecialchars($_SESSION['user']['Email']); ?></h1>
+            <?php else: ?>
+                <h3>Bienvenu !</h3>
+            <?php endif; ?>
+        </div>
+    </div>
 
+    <div class="container my-4">
         <h1 class="text-center">Bienvenue sur notre Hôtel</h1>
         <p class="text-center">Nous vous offrons des chambres confortables et un service exceptionnel. Découvrez nos chambres disponibles et réservez dès aujourd'hui !</p>
 
