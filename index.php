@@ -1,75 +1,19 @@
 <!-- index.php              -->
 <?php
-session_start();
-define('INCLUDED_FROM_INDEX', true);
-
-include('Vue/Navbar.php');
-
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+//include('Vue/Navbar.php');
 $page = isset($_GET['page']) ? $_GET['page'] : 'accueil';
-
-// Liste des pages accessibles sans connexion
-$public_pages = [
-    'accueil',
-    'connexion',
-    'inscription',
-    'register',
-    '404',
-    'photosList',
-    'chambresList'
-];
-
-// Liste des pages accessibles uniquement par les administrateurs
-$admin_pages = [
-    'utilisateurs',
-    'photos',
-    'chambres'
-];
-
-// Liste des pages accessibles par tous les utilisateurs connectés
-$user_pages = [
-    'profil',
-    'editProfile'
-];
-
-// Liste des pages accessibles uniquement par les clients
-$client_pages = [
-    'reservations',
-    'reservation'
-];
-
-// Vérification des autorisations
-if (!in_array($page, $public_pages) && !isset($_SESSION['user'])) {
-    header('Location: /ppe/index.php?page=404');
-    exit();
-}
-
-if (in_array($page, $admin_pages) && (!isset($_SESSION['user']) || $_SESSION['user']['User_role'] !== 'Admin')) {
-    header('Location: /ppe/index.php?page=404');
-    exit();
-}
-
-if (in_array($page, $client_pages) && (!isset($_SESSION['user']) || $_SESSION['user']['User_role'] !== 'Client')) {
-    header('Location: /ppe/index.php?page=404');
-    exit();
-}
-
-if (in_array($page, $user_pages) && !isset($_SESSION['user'])) {
-    header('Location: /ppe/index.php?page=connexion');
-    exit();
-}
 
 switch ($page) {
     // Pages publiques
     case 'accueil':
-        include('Vue/Accueil.php');
+        require('Vue/Accueil.php');
         break;
         
-    case 'connexion':
+    case 'Login':
         include('Vue/User/UserLogin.php');
-        break;
-
-    case 'inscription':
-        include('Vue/User/UserInscription.php');
         break;
 
     case 'register':
@@ -85,16 +29,44 @@ switch ($page) {
         break;
 
     // Pages administrateur
-    case 'utilisateurs':
-        include('Vue/User/listUsers.php');
+    case 'chambreForm':
+        include('Vue/Chambre/ChambreForm.php');
         break;
 
-    case 'photos':
+    case 'addChambre':
+        include('Vue/Chambre/AddChambre.php');
+        break;
+
+    case 'photoForm':
         include('Vue/Photo/PhotoForm.php');
         break;
 
-    case 'chambres':
-        include('Vue/Chambre/ChambreForm.php');
+    case 'editProfile':
+        include('Vue/User/EditProfile.php');
+        break;
+
+    case 'listUser':
+        include('Vue/User/ListUser.php');
+        break;
+
+    case 'chambreDetails':
+        include('Vue/Chambre/ChambreDetails.php');
+        break;
+
+    case 'photoGallery':
+        include('Vue/Photo/PhotoGallery.php');
+        break;
+
+    case 'userSettings':
+        include('Vue/User/UserSettings.php');
+        break;
+
+    case 'adminPanel':
+        include('Vue/Admin/AdminPanel.php');
+        break;
+
+    case 'siteMap':
+        include('Vue/SiteMap.php');
         break;
 
     // Pages utilisateur
@@ -102,7 +74,7 @@ switch ($page) {
         include('Vue/User/UserProfil.php');
         break;
 
-    case 'editProfile':
+    case 'modifierProfile':
         include('Vue/User/EditProfile.php');
         break;
 
@@ -115,11 +87,18 @@ switch ($page) {
         include('Vue/Reservation/ReservationForm.php');
         break;
 
-    // Déconnexion
-    case 'deconnexion':
+    // DéLogin
+    case 'Exit':
         session_destroy();
         header('Location: /ppe/');
         exit();
+        break;
+    case 'logout':
+        include('Vue/User/UserLogout.php');
+        break;
+    //nav bar
+    case 'header':
+        include('Vue/header.php');
         break;
 
     // Page d'erreur

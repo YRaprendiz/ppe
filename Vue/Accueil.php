@@ -1,116 +1,58 @@
-<!-- Vue/Accueil.php            -->
-    <div>
-	<h1>page Accueil</h1>
+<?php
+include('./Bdd/bdd.php');
+require_once(__DIR__ . '/../Model/PhotoModel.php');
 
-<?php
-	if (isset($_SESSION['user'])) { 
-?>
-	<h1>Bienvenu vous etes connecté <?php echo $_SESSION['user']['Email']; ?></h1>
-<?php
-	}else
-?>
-		<h1>Bienvenu<h1>
-</div>
-<?php
+// Check if session is not already started
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-include('./Bdd/bdd.php');
-include('./Model/ChambresModel.php');
+// Create PhotoModel instance
+$photoModel = new PhotoModel($bdd);
 
-$ChambresModel = new ChambresModel($bdd);
-$chambres = $ChambresModel->getAllChambres();
+// Retrieve specific photos
+$photo4 = null;
+$photo5 = null;
 
-// Define user role
-$isAdmin = isset($_SESSION['user']) && isset($_SESSION['user']['User_role']) && $_SESSION['user']['User_role'] === 'admin';
+$photos = $photoModel->getPhotos();
+foreach ($photos as $photo) {
+    if ($photo['ID_Photos'] == 4) {
+        $photo4 = $photo;
+    }
+    if ($photo['ID_Photos'] == 5) {
+        $photo5 = $photo;
+    }
+}
 ?>
+<?php include('header.php'); ?>
 
-<div class="container py-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Liste des Chambres</h1>
-        <?php if ($isAdmin): ?>
-            <a href="index.php?page=chambreForm" class="btn btn-primary">
-                <i class="bi bi-plus-circle"></i> Ajouter une chambre
-            </a>
-        <?php endif; ?>
-    </div>
+        <h1 class="text-center">Bienvenue sur notre Hôtel</h1>
+        <p class="text-center">Nous vous offrons des chambres confortables et un service exceptionnel. Découvrez nos chambres disponibles et réservez dès aujourd'hui !</p>
 
-    <?php if (isset($_GET['message'])): ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <?php echo htmlspecialchars($_GET['message']); ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <?php endif; ?>
-
-    <?php if (isset($_GET['error'])): ?>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <?php echo htmlspecialchars($_GET['error']); ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <?php endif; ?>
-
-    <div class="row g-4">
-        <?php foreach ($chambres as $chambre): ?>
-            <div class="col-md-6 col-lg-4">
-                <div class="card h-100 shadow-sm">
-                    <img src="data:image/jpeg;base64,<?= base64_encode($chambre['Images']) ?>" 
-                         class="card-img-top"
-                         alt="Image Chambre"
-                         style="height: 200px; object-fit: cover;">
-                    
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <img src="data:image/jpeg;base64,<?php echo $photo4 ? base64_encode($photo4['Images']) : ''; ?>" class="card-img-top" alt="Image de l'hôtel">
                     <div class="card-body">
-                        <h5 class="card-title">Chambre <?= htmlspecialchars($chambre['ID_Chambres']) ?></h5>
-                        <p class="card-text">
-                            <span class="badge bg-info"><?= htmlspecialchars($chambre['Type_Chambre']) ?></span>
-                        </p>
-                        <p class="card-text">
-                            <span class="badge <?= $chambre['Statut'] ? 'bg-success' : 'bg-danger' ?>">
-                                <?= $chambre['Statut'] ? 'Disponible' : 'Occupée' ?>
-                            </span>
-                        </p>
-                        <p class="card-text">
-                            <strong>Prix:</strong> 
-                            <span class="text-primary"><?= number_format($chambre['Prix'], 2, ',', ' ') ?> €</span>
-                        </p>
-                        <p class="card-text"><?= htmlspecialchars($chambre['Description']) ?></p>
-                        <?php if (!$isAdmin && $chambre['Statut']): ?>
-                            <a href="index.php?page=reservation&chambre_id=<?= $chambre['ID_Chambres'] ?>" class="btn btn-primary">
-                                <i class="bi bi-calendar-check"></i> Réserver
-                            </a>
-                        <?php endif; ?>
+                        <h5 class="card-title">Explorez notre Hôtel</h5>
+                        <p class="card-text">L'hôtel propose une large gamme de chambres adaptées à tous vos besoins. Venez découvrir notre établissement moderne et confortable.</p>
+                        <a href="index.php?page=chambres" class="btn btn-primary">Voir nos chambres</a>
                     </div>
-
-                    <?php if ($isAdmin): ?>
-                        <div class="card-footer bg-transparent">
-                            <div class="d-flex gap-2">
-                                <a href="index.php?page=chambreForm&id=<?= $chambre['ID_Chambres'] ?>" 
-                                   class="btn btn-outline-primary flex-grow-1">
-                                    <i class="bi bi-pencil"></i> Modifier
-                                </a>
-                                <form action="Controller/ChambresController.php" 
-                                      method="POST" 
-                                      class="flex-grow-1"
-                                      onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette chambre ?');">
-                                    <input type="hidden" name="action" value="delete">
-                                    <input type="hidden" name="id" value="<?= $chambre['ID_Chambres'] ?>">
-                                    <button type="submit" class="btn btn-outline-danger w-100">
-                                        <i class="bi bi-trash"></i> Supprimer
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    <?php endif; ?>
                 </div>
             </div>
-        <?php endforeach; ?>
-    </div>
 
-    <?php if (empty($chambres)): ?>
-        <div class="text-center py-5">
-            <i class="bi bi-house-x display-1 text-muted mb-3"></i>
-            <h3 class="text-muted">Aucune chambre disponible</h3>
-            <p class="text-muted">Veuillez réessayer plus tard</p>
+            <div class="col-md-6">
+                <div class="card">
+                    <img src="data:image/jpeg;base64,<?php echo $photo5 ? base64_encode($photo5['Images']) : ''; ?>" class="card-img-top" alt="Nos services">
+                    <div class="card-body">
+                        <h5 class="card-title">Nos Services</h5>
+                        <p class="card-text">Profitez de nos services premium : Wi-Fi gratuit, salle de sport, restaurant et bien plus encore. Nous nous engageons à rendre votre séjour agréable.</p>
+                        <a href="index.php?page=contact" class="btn btn-primary">Contactez-nous</a>
+                    </div>
+                </div>
+            </div>
         </div>
-    <?php endif; ?>
-</div>
+    </div>
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<?php include('footer.php'); ?>

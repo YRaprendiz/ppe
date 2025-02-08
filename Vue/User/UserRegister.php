@@ -13,54 +13,51 @@ if (isset($_SESSION['user'])) {
 // Error messages
 $error_messages = [
     'missing_fields' => 'Veuillez remplir tous les champs',
-    'registration_failed' => 'L\'inscription a échoué. Veuillez réessayer.',
+    'registration_failed' => 'L\'inscription a échoué. Veuillez réessayer. Vérifiez s\'il existe déjà un compte enregistré sur la page de connexion',
     'system' => 'Une erreur système est survenue'
 ];
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Inscription - PPE</title>
-    <link rel="stylesheet" href="/ppe/assets/css/style.css">
-</head>
-<body>
-    <div class="register-container">
-        <h1>Inscription</h1>
-        
-        <?php if (isset($_GET['error']) && isset($error_messages[$_GET['error']])): ?>
-            <div class="error-message">
-                <?php echo htmlspecialchars($error_messages[$_GET['error']]); ?>
+<?php include('./vue/header.php'); ?>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1  class="text-center">Inscription</h1>
+                
+                <?php if (isset($_GET['error']) && isset($error_messages[$_GET['error']])): ?>
+                    <div class="error-message">
+                        <?php echo htmlspecialchars($error_messages[$_GET['error']]); ?>
+                    </div>
+                <?php endif; ?>
+
+                <form action="/ppe/Controller/UserController.php" method="POST">
+                    <div class="form-group">
+                        <label for="nom">Nom</label>
+                        <input type="text" id="nom" name="nom" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prenom">Prénom</label>
+                        <input type="text" id="prenom" name="prenom" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" name="password" class="form-control" required>
+                    </div>
+
+                    <input type="hidden" name="action" value="inscription">
+                    <button type="submit" class="btn btn-primary btn-block">S'inscrire</button>
+                </form>
+
+                <div class="text-center">
+                    Déjà inscrit? <a href="/ppe/Vue/User/UserLogin.php" class="btn btn-primary btn-block">Se connecter</a>
+                </div>
             </div>
-        <?php endif; ?>
-
-        <form action="/ppe/Controller/UserController.php" method="POST">
-            <div class="form-group">
-                <label for="nom">Nom</label>
-                <input type="text" id="nom" name="nom" required>
-            </div>
-
-            <div class="form-group">
-                <label for="prenom">Prénom</label>
-                <input type="text" id="prenom" name="prenom" required>
-            </div>
-
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Mot de passe</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-
-            <input type="hidden" name="action" value="inscription">
-            <button type="submit" class="btn-submit">S'inscrire</button>
-        </form>
-
-        <div class="login-link">
-            Déjà inscrit? <a href="/ppe/Vue/User/UserLogin.php">Se connecter</a>
         </div>
     </div>
-</body>
-</html>
+<p>//footer</p>

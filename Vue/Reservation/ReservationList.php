@@ -16,14 +16,7 @@ $reservationModel = new ReservationModel($bdd);
 $reservations = $reservationModel->getReservationsByUser($_SESSION['user']['ID_Utilisateur']);
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Mes Réservations - PPE</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
-</head>
-<body>
+<?php include('./vue/header.php'); ?>
     <div class="container py-5">
         <h1 class="mb-4">Mes Réservations</h1>
 
@@ -98,5 +91,4 @@ $reservations = $reservationModel->getReservationsByUser($_SESSION['user']['ID_U
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<p>//footer</p>

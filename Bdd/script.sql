@@ -40,6 +40,4 @@ CREATE TABLE IF NOT EXISTS Reservations (
     Statut_Reservation ENUM('En attente', 'Confirmée', 'Annulée') NOT NULL DEFAULT 'En attente',
     PRIMARY KEY (ID_Reservation),
     FOREIGN KEY (ID_Utilisateur) REFERENCES Utilisateurs(ID_Utilisateur),
-    FOREIGN KEY (ID_Chambres) REFERENCES Chambres(ID_Chambres)
-r) REFERENCES Utilisateurs(ID_Utilisateur)
-);
+    FOREIGN KEY (ID_Chambres) REFERENCES Chambres(ID_Chambres)) REFERENCES Utilisateurs(ID_Utilisateur);

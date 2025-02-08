@@ -13,7 +13,7 @@ require_once(__DIR__ . '/../../Controller/ChambreController.php');
 $controller = new ChambresController($bdd);
 $chambres = $controller->getAllChambres();
 ?>
- 
+ <?php include('./vue/header.php'); ?>
 <h1>Gestion des Chambres</h1>
     <form action="/ppe/Controller/ChambreController.php" method="POST" enctype="multipart/form-data">
         
@@ -65,3 +65,4 @@ $chambres = $controller->getAllChambres();
         <?php endforeach; ?>
     <?php endif; ?>
     </ul>
+<p>//footer</p>

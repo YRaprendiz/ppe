@@ -20,13 +20,7 @@ if (!$user) {
     exit();
 }
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Modifier le Profil - PPE</title>
-    <link rel="stylesheet" href="/ppe/assets/css/style.css">
-</head>
-<body>
+<?php include('header.php'); ?>
     <div class="profile-edit-container">
         <h1>Modifier mon Profil</h1>
 
@@ -65,5 +59,4 @@ if (!$user) {
             </div>
         </form>
     </div>
-</body>
-</html>
+<p>//footer</p>

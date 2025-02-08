@@ -18,6 +18,7 @@ try {
     $photos = [];
 }
 ?>
+<?php include('./Vue/header.php'); ?>
 
 <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -102,3 +103,4 @@ try {
         </div>
     <?php endif; ?>
 </div>
+<p>//footer</p>

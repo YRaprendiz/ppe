@@ -14,40 +14,37 @@ if (isset($_SESSION['user'])) {
 // Error messages
 $error_messages = [
     'missing_fields' => 'Veuillez remplir tous les champs',
-    'invalid_credentials' => 'Email ou mot de passe incorrect',
+    'invalid_credentials' => 'Email ou mot de passe incorrect. <p class="text-center">Pas encore inscrit? <a href="/ppe/index.php?page=register">Créez un compte ici</a></p>',
     'system' => 'Une erreur système est survenue'
 ];
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login - PPE</title>
-    <link rel="stylesheet" href="/ppe/assets/css/style.css">
-</head>
-<body>
-    <div class="login-container">
-        <h1>Login</h1>
-        
-        <?php if (isset($_GET['error']) && isset($error_messages[$_GET['error']])): ?>
-            <div class="error-message">
-                <?php echo htmlspecialchars($error_messages[$_GET['error']]); ?>
-            </div>
-        <?php endif; ?>
+<?php include('./Vue/header.php'); ?>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1 class="text-center">Login</h1>
+                
+                <?php if (isset($_GET['error']) && isset($error_messages[$_GET['error']])): ?>
+                    <div class="alert alert-danger">
+                        <?php echo htmlspecialchars($error_messages[$_GET['error']]); ?>
+                    </div>
+                <?php endif; ?>
 
-        <form action="/ppe/Controller/UserController.php" method="POST">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
+                <form action="/ppe/Controller/UserController.php" method="POST">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" required>
+                    </div>
 
-            <div class="form-group">
-                <label for="password">Mot de passe</label>
-                <input type="password" id="password" name="password" required>
-            </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" name="password" class="form-control" required>
+                    </div>
 
-            <input type="hidden" name="action" value="login">
-            <button type="submit" class="btn-submit">Se connecter</button>
-        </form>
+                    <input type="hidden" name="action" value="login">
+                    <button type="submit" class="btn btn-primary btn-block">Se connecter</button>
+                    <p class="text-center">Pas encore inscrit? <a href="/ppe/index.php?page=register" class="btn btn-primary btn-block">Créez un compte ici</a></p>
+                </form>
+            </div>
+        </div>
     </div>
-</body>
-</html>

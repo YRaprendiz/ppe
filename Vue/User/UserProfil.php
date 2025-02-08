@@ -16,14 +16,8 @@ $userModel = new UserModel($bdd);
 $user = $userModel->getUserById($_SESSION['user']['ID_Utilisateur']);
 
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Mon Profil - PPE</title>
-    <link rel="stylesheet" href="/ppe/assets/css/style.css">
-</head>
-<body>
-    <div class="profile-container">
+<?php include('./vue/header.php'); ?>
+    <div class="profile-container"class="center">
         <h1>Mon Profil</h1>
         
         <?php if (isset($_GET['success'])): ?>
@@ -66,5 +60,4 @@ $user = $userModel->getUserById($_SESSION['user']['ID_Utilisateur']);
             <a href="/ppe/index.php">Retour à l'accueil</a>
         </div>
     </div>
-</body>
-</html>
+<p>//footer</p>

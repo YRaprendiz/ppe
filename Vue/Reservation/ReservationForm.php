@@ -32,7 +32,7 @@ if (!$chambre['Statut']) {
     exit;
 }
 ?>
-
+<?php include('./vue/header.php'); ?>
 <div class="container py-4">
     <h1 class="mb-4">Réserver la Chambre <?= htmlspecialchars($chambre['ID_Chambres']) ?></h1>
 
@@ -132,3 +132,4 @@ document.addEventListener('DOMContentLoaded', function() {
     dateFin.addEventListener('change', updatePrixTotal);
 });
 </script>
+<p>//footer</p>
