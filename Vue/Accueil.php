@@ -32,12 +32,12 @@ foreach ($photos as $photo) {
         <div class="row">
             <div class="col-md-6">
                 <div class="card">
-                    <img src="data:image/jpeg;base64,<?php echo $photo4 ? base64_encode($photo4['Images']) : ''; ?>" class="card-img-top" alt="Image de l'hôtel">
                     <div class="card-body">
                         <h5 class="card-title">Explorez notre Hôtel</h5>
                         <p class="card-text">L'hôtel propose une large gamme de chambres adaptées à tous vos besoins. Venez découvrir notre établissement moderne et confortable.</p>
                         <a href="index.php?page=chambres" class="btn btn-primary">Voir nos chambres</a>
                     </div>
+                    <img src="data:image/jpeg;base64,<?php echo $photo4 ? base64_encode($photo4['Images']) : ''; ?>" class="card-img-top" alt="Image de l'hôtel">
                 </div>
             </div>
 
