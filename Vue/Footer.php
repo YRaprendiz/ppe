@@ -42,7 +42,7 @@
                     <td><a class="indexLinks" href="index.php?page=authLogout"                    >Auth Logout</a>                              |</td></tr>
                 <tr><td><a class="indexLinks" href="index.php?page=userChambresList"              >User Chambres List</a>                       |</td>
                     <td><a class="indexLinks" href="index.php?page=userPhotoList"                 >User Photo List</a>                          |</td>
-                    <td><a class="indexLinks" href="index.php?page=userReservationList"           >User Reservation List</a>                    |</td>
+                    <td><a class="indexLinks" href="index.php?page=userMesReservationList"           >User Reservation List</a>                    |</td>
                     <td><a class="indexLinks" href="index.php?page=userProfil"                    >User Profil</a>                              |</td></tr>
             </tbody>
         </table>

@@ -33,9 +33,7 @@ switch ($page) {
     case 'adminPhotoForm':
         include('./Vue/Admin/AdminPhotoForm.php');
         break;
-    case 'adminReservationForm':
-        include('./Vue/Admin/AdminReservationForm.php');
-        break;
+
 // Vue/Auth
     case 'authInscription':
         include('./Vue/Auth/AuthInscription.php');
@@ -53,11 +51,19 @@ switch ($page) {
     case 'userPhotoList':
         include('./Vue/User/UserPhotoList.php');
         break;
-    case 'userReservationList':
-        include('./Vue/User/UserReservationList.php');
+    case 'userMesReservationList':
+        include('./Vue/User/UserMesReservationList.php');
         break;
     case 'userProfil':
         include('Vue/User/UserProfil.php');
+        break;
+    case 'UserReservationForm':
+        include('./Vue/Admin/AdminReservationForm.php?');
+        break;
+
+        // Vue/Reservation
+    case 'reservations':
+        include('./Controller/ReservationController.php');
         break;
 
     default:

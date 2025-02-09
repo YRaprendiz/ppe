@@ -45,7 +45,7 @@ if (!$chambre['Statut']) {
 
     <div class="card shadow-sm">
         <div class="card-body">
-            <form action="/ppe/Controller/ReservationController.php" method="POST">
+            <form action="../../Controller/ReservationController.php" method="POST">
                 <input type="hidden" name="action" value="createReservation">
                 <input type="hidden" name="chambre_id" value="<?= $chambre['ID_Chambres'] ?>">
                 <input type="hidden" name="prix_par_nuit" value="<?= $chambre['Prix'] ?>">
@@ -80,7 +80,7 @@ if (!$chambre['Statut']) {
                     <button type="submit" class="btn btn-primary">
                         <i class="bi bi-calendar-check"></i> Confirmer la réservation
                     </button>
-                    <a href="index.php?page=chambres" class="btn btn-outline-secondary">
+                    <a href="index.php?page=userChambresList" class="btn btn-outline-secondary">
                         <i class="bi bi-arrow-left"></i> Retour aux chambres
                     </a>
                 </div>
@@ -100,36 +100,36 @@ document.addEventListener('DOMContentLoaded', function() {
         if (dateDebut.value && dateFin.value) {
             const start = new Date(dateDebut.value);
             const end = new Date(dateFin.value);
-            const diffTime = Math.abs(end - start);
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             
-            if (diffDays > 0) {
-                const prixTotal = diffDays * prixParNuit;
-                prixTotalElement.textContent = new Intl.NumberFormat('fr-FR', {
-                    style: 'currency',
-                    currency: 'EUR'
-                }).format(prixTotal);
-            } else {
+            // Validate dates client-side
+            if (start >= end) {
+                alert('La date de départ doit être après la date d\'arrivée');
+                dateFin.value = '';
                 prixTotalElement.textContent = '-- €';
+                return;
             }
+            
+            const timeDiff = end.getTime() - start.getTime();
+            const nights = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Calculate nights
+            
+            const totalPrice = nights * prixParNuit;
+            prixTotalElement.textContent = totalPrice.toLocaleString('fr-FR', {
+                minimumFractionDigits: 2, 
+                maximumFractionDigits: 2
+            }) + ' €';
         }
     }
 
-    dateDebut.addEventListener('change', function() {
-        // Update min date of date_fin
-        const nextDay = new Date(dateDebut.value);
-        nextDay.setDate(nextDay.getDate() + 1);
-        dateFin.min = nextDay.toISOString().split('T')[0];
-        
-        // Clear date_fin if it's before date_debut
-        if (dateFin.value && new Date(dateFin.value) <= new Date(dateDebut.value)) {
-            dateFin.value = '';
-        }
-        
-        updatePrixTotal();
-    });
-
+    dateDebut.addEventListener('change', updatePrixTotal);
     dateFin.addEventListener('change', updatePrixTotal);
+
+    // Prevent form submission if dates are invalid
+    document.querySelector('form').addEventListener('submit', function(event) {
+        if (!dateDebut.value || !dateFin.value) {
+            event.preventDefault();
+            alert('Veuillez sélectionner les dates d\'arrivée et de départ');
+        }
+    });
 });
 </script>
 <?php include '/xampp/htdocs/ppe/Vue/Footer.php';?>

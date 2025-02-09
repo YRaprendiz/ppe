@@ -25,7 +25,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 <li class="nav-item"><a class="nav-link" href="./index.php?page=authInscription">Inscription</a></li>
             <?php endif; ?>
             <?php if (isset($_SESSION['user'])): ?>
-                <li class="nav-item"><a class="nav-link" href="./index.php?page=userReservationList">Reservation</a></li>
+                <li class="nav-item"><a class="nav-link" href="./index.php?page=userMesReservationList">Mes Reservation</a></li>
                 <li class="nav-item"><a class="nav-link" href="./index.php?page=userProfil">Profil</a></li>
                 <li class="nav-item"><a class="nav-link" href="./index.php?page=authLogout">Logout</a></li>
                 <li class="nav-item">

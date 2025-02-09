@@ -46,7 +46,7 @@ $chambres = $ChambresModel->getAllChambres();
                                 </div>
                             </div>
                             <div class="card-footer bg-transparent">
-                                <a href="index.php?page=reservation&chambre_id=<?= $chambre['ID_Chambres'] ?>" 
+                                <a href="index.php?page=adminReservationForm&chambre_id=<?= $chambre['ID_Chambres'] ?>" 
                                 class="btn btn-primary w-100 <?= !$chambre['Statut'] ? 'disabled' : '' ?>">
                                     <i class="bi bi-calendar-check"></i> 
                                     <?= $chambre['Statut'] ? 'Réserver' : 'Non disponible' ?>
