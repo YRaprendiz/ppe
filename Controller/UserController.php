@@ -12,9 +12,6 @@ if (isset($_POST['action'])) {
 	$UserController = new UserController($bdd);
 
 	switch ($_POST['action']) {
-		case 'inscription':
-			$UserController->create();
-			break;
 		case 'login':
 			$UserController->login();
 			break;
@@ -23,6 +20,9 @@ if (isset($_POST['action'])) {
 			break;
 		case 'listUsers':
 			$UserController->listUsers();
+			break;
+		case 'inscription':
+			$UserController->create();
 			break;
 		case 'getProfile':
 			$UserController->getProfile();
@@ -63,7 +63,7 @@ class UserController
 			);
 
 			if ($success) {
-				header('Location: /ppe/Vue/User/UserLogin.php?success=registration');
+				header('Location: /ppe/index.php?page=userProfil&success=registration_completed');
 				exit();
 			} else {
 				header('Location: /ppe/Vue/User/UserRegister.php?error=registration_failed');
@@ -71,7 +71,7 @@ class UserController
 			}
 		} catch (Exception $e) {
 			error_log("Registration error: " . $e->getMessage());
-			header('Location: /ppe/Vue/User/UserRegister.php?error=system');
+			header('Location: /ppe/index.php?page=404&error=system');
 			exit();
 		}
 	}
@@ -122,7 +122,7 @@ class UserController
 		session_destroy();
 		
 		// Redirect to login page
-		header('Location: /ppe/Vue/User/UserLogin.php');
+		header('Location: /ppe/index.php?page=accueil');
 		exit();
 	}
 

@@ -1,9 +1,11 @@
 <!-- ChambreForm.php-->
  <?php 
-
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
  if (!isset($_SESSION['user']) || $_SESSION['user']['User_role'] !== 'Admin') 
  {
-    echo '<h1>Accès refusé</h1>';
+    echo '<h1>Accès refusé .' . htmlspecialchars($_SESSION['user']['Email']) . ' . </h1>';
     exit();
  }
 require_once(__DIR__ . '/../../Bdd/bdd.php');
@@ -13,9 +15,9 @@ require_once(__DIR__ . '/../../Controller/ChambreController.php');
 $controller = new ChambresController($bdd);
 $chambres = $controller->getAllChambres();
 ?>
- <?php include('./vue/header.php'); ?>
+<?php include('/xampp/htdocs/ppe/Vue/Header.php'); ?>
 <h1>Gestion des Chambres</h1>
-    <form action="/ppe/Controller/ChambreController.php" method="POST" enctype="multipart/form-data">
+    <form action="../../Controller/ChambreController.php" method="POST" enctype="multipart/form-data">
         
         <label for="Images">Image :</label>
         <input type="file" name="Images" ><!--required -->   <!-- --><br>
@@ -41,7 +43,7 @@ $chambres = $controller->getAllChambres();
         <label for="Descriptif">Descriptif :</label>
         <textarea name="Descriptif" ></textarea> <!-- required-->
         
-        <input type="hidden" name="action" value="add">
+        <input type="hidden" name="action" value="ajouter">
         <button type="submit">Ajouter Chambre</button>
     </form>
 
@@ -65,4 +67,4 @@ $chambres = $controller->getAllChambres();
         <?php endforeach; ?>
     <?php endif; ?>
     </ul>
-<?php include '/xampp/htdocs/ppe/Vue/Footer.php';?>
+<?php include('../Footer.php'); ?>

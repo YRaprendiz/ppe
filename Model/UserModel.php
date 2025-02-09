@@ -11,11 +11,9 @@ class UserModel
 	}
 
 
-	public function addUser($nom, $prenom, $email, $password)
-	{
-
-		$hashPassword = sha1($password);
-		$req = $this->bdd->prepare("INSERT INTO utilisateurs (Nom, Prenom, Email, Mdp) VALUES (:nom, :prenom, :email, :mdp)");
+public function addUser($nom, $prenom, $email, $password) {
+	$hashPassword = password_hash($password, PASSWORD_BCRYPT);
+	$req = $this->bdd->prepare("INSERT INTO utilisateurs (Nom, Prenom, Email, Mdp) VALUES (:nom, :prenom, :email, :mdp)");
 		$req->bindParam(':nom', $nom);
 		$req->bindParam(':prenom', $prenom);
 		$req->bindParam(':email', $email);
@@ -24,21 +22,20 @@ class UserModel
 		return $req->execute();
 	}
 
-	public function checkLogin($email, $password)
-	{
+// Replace sha1() with password_hash() and password_verify()
+public function checkLogin($email, $password) {
+	$req = $this->bdd->prepare("SELECT * FROM utilisateurs WHERE Email = :email");
+	$req->bindParam(':email', $email);
+	$req->execute();
+	$user = $req->fetch(PDO::FETCH_ASSOC);
 
-		$hashMdp = sha1($password);
-		$req = $this->bdd->prepare("SELECT * FROM utilisateurs where Email =
-			:email AND Mdp = :mdp");
-
-		$req->bindParam(':email', $email);
-		$req->bindParam(':mdp', $hashMdp);
-
-		$req->execute();
-
-		return $req->fetch();
-
+	if ($user && password_verify($password, $user['Mdp'])) {
+		// Remove sensitive information before storing in session
+		unset($user['Mdp']);
+		return $user;
 	}
+	return false;
+}
 
 	public function getAllUsers()
     {

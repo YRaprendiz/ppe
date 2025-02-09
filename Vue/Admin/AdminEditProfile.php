@@ -20,43 +20,73 @@ if (!$user) {
     exit();
 }
 ?>
-<?php include('header.php'); ?>
-    <div class="profile-edit-container">
-        <h1>Modifier mon Profil</h1>
+<?php include('/xampp/htdocs/ppe/Vue/Header.php'); ?>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h1 class="card-title text-center mb-0">Modifier mon Profil</h1>
+                    </div>
+                    <div class="card-body">
+                        <?php if (isset($_GET['error'])): ?>
+                            <div class="alert alert-danger">
+                                <?php echo htmlspecialchars($_GET['error']); ?>
+                            </div>
+                        <?php endif; ?>
 
-        <?php if (isset($_GET['error'])): ?>
-            <div class="error-message">
-                <?php echo htmlspecialchars($_GET['error']); ?>
-            </div>
-        <?php endif; ?>
+                        <form action="/ppe/Controller/UserController.php" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="action" value="updateProfile">
+                            
+                            <div class="mb-3 text-center">
+                                <?php if (!empty($user['Images'])): ?>
+                                    <img src="data:image/jpeg;base64,<?= base64_encode($user['Images']); ?>" 
+                                         alt="Profile Picture" class="img-thumbnail rounded-circle mb-3" 
+                                         style="max-width: 200px; max-height: 200px;">
+                                <?php else: ?>
+                                    <div class="alert alert-info">Pas de photo de profil</div>
+                                <?php endif; ?>
+                                
+                                <div class="mb-3">
+                                    <label for="profile_image" class="form-label">Changer la photo de profil</label>
+                                    <input type="file" class="form-control" id="profile_image" name="profile_image" 
+                                           accept="image/jpeg,image/png,image/gif">
+                                    <small class="form-text text-muted">Formats acceptés: JPEG, PNG, GIF (max 5MB)</small>
+                                </div>
+                            </div>
 
-        <form action="/ppe/Controller/UserController.php" method="POST" class="profile-form">
-            <input type="hidden" name="action" value="updateProfile">
-            
-            <div class="form-group">
-                <label for="nom">Nom</label>
-                <input type="text" id="nom" name="nom" value="<?php echo htmlspecialchars($user['Nom']); ?>" required>
-            </div>
+                            <div class="mb-3">
+                                <label for="nom" class="form-label">Nom</label>
+                                <input type="text" class="form-control" id="nom" name="nom" 
+                                       value="<?php echo htmlspecialchars($user['Nom']); ?>" required>
+                            </div>
 
-            <div class="form-group">
-                <label for="prenom">Prénom</label>
-                <input type="text" id="prenom" name="prenom" value="<?php echo htmlspecialchars($user['Prenom']); ?>" required>
-            </div>
+                            <div class="mb-3">
+                                <label for="prenom" class="form-label">Prénom</label>
+                                <input type="text" class="form-control" id="prenom" name="prenom" 
+                                       value="<?php echo htmlspecialchars($user['Prenom']); ?>" required>
+                            </div>
 
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['Email']); ?>" required>
-            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" 
+                                       value="<?php echo htmlspecialchars($user['Email']); ?>" required>
+                            </div>
 
-            <div class="form-group">
-                <label for="password">Nouveau mot de passe (laisser vide pour ne pas changer)</label>
-                <input type="password" id="password" name="password">
-            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Nouveau mot de passe (laisser vide pour ne pas changer)</label>
+                                <input type="password" class="form-control" id="password" name="password">
+                                <small class="form-text text-muted">Laissez vide si vous ne voulez pas changer votre mot de passe</small>
+                            </div>
 
-            <div class="form-actions">
-                <button type="submit" class="btn-submit">Enregistrer les modifications</button>
-                <a href="/ppe/Vue/User/UserProfil.php" class="btn-cancel">Annuler</a>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">Mettre à jour le profil</button>
+                                <a href="/ppe/Vue/User/UserProfil.php" class="btn btn-secondary">Annuler</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </form>
+        </div>
     </div>
 <?php include '/xampp/htdocs/ppe/Vue/Footer.php';?>

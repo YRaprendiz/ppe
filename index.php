@@ -28,7 +28,7 @@ switch ($page) {
         include('./Vue/Admin/AdminEditProfile.php');
         break;
     case 'adminListUser':
-        include('./Vue/Admin/AdminListUser.php');
+        include('./Vue/Admin/AdminListUsers.php');
         break;
     case 'adminPhotoForm':
         include('./Vue/Admin/AdminPhotoForm.php');
@@ -40,23 +40,13 @@ switch ($page) {
     case 'authInscription':
         include('./Vue/Auth/AuthInscription.php');
         break;
-    case 'login':
-        include('./Vue/Authentication/login.php');
-        break;
-    case 'logout':
-        include('./Vue/Authentication/logout.php');
-        break;
-    case 'register':
-        include('./Vue/Authentication/register.php');
-        break;
-////
     case 'authLogin':
         include('./Vue/Auth/AuthLogin.php');
         break;
     case 'authLogout':
         include('./Vue/Auth/AuthLogout.php');
         break;
-////
+// Vue/User
     case 'userChambresList':
         include('./Vue/User/UserChambresList.php');
         break;

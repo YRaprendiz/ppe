@@ -8,7 +8,7 @@ require_once(__DIR__ . '/../../Model/ReservationModel.php');
 
 // Check if user is logged in
 if (!isset($_SESSION['user'])) {
-    header('Location: /ppe/Vue/User/UserLogin.php');
+    header('Location: /ppe/index.php?page=login');
     exit();
 }
 
