@@ -30,6 +30,9 @@ if (isset($_POST['action'])) {
 		case 'updateProfile':
 			$UserController->updateProfile();
 			break;
+		case 'adminUpdateUser':
+			$UserController->adminUpdateUser();
+			break;
 		default:
 			header('Location: /ppe/index.php?error=invalid_action');
 			exit();
@@ -140,12 +143,31 @@ class UserController
 			$email = $_POST['email'] ?? null;
 			$password = !empty($_POST['password']) ? $_POST['password'] : null;
 
+			// Handle image upload
+			$image = null;
+			if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == 0) {
+				$maxFileSize = 5 * 1024 * 1024; // 5MB
+				$allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+
+				if ($_FILES['profile_image']['size'] > $maxFileSize) {
+					header('Location: /ppe/Vue/User/UserProfil.php?error=file_too_large');
+					exit();
+				}
+
+				if (!in_array($_FILES['profile_image']['type'], $allowedTypes)) {
+					header('Location: /ppe/Vue/User/UserProfil.php?error=invalid_file_type');
+					exit();
+				}
+
+				$image = file_get_contents($_FILES['profile_image']['tmp_name']);
+			}
+
 			if (!$nom || !$prenom || !$email) {
 				header('Location: /ppe/Vue/User/UserProfil.php?error=missing_fields');
 				exit();
 			}
 
-			$success = $this->userModel->updateUser($id, $nom, $prenom, $email, $password);
+			$success = $this->userModel->updateUser($id, $nom, $prenom, $email, $password, $image);
 			
 			if ($success) {
 				// Update session data
@@ -161,4 +183,39 @@ class UserController
 			exit();
 		}
 	}
+
+public function adminUpdateUser()
+{
+    try {
+        if (!isset($_SESSION['user']) || $_SESSION['user']['User_role'] !== 'Admin') {
+            header('Location: /ppe/Vue/User/UserLogin.php');
+            exit();
+        }
+
+        $id = $_POST['id'] ?? null;
+        $nom = $_POST['nom'] ?? null;
+        $prenom = $_POST['prenom'] ?? null;
+        $email = $_POST['email'] ?? null;
+        $user_role = $_POST['user_role'] ?? null;
+        $password = !empty($_POST['password']) ? $_POST['password'] : null;
+
+        if (!$id || !$nom || !$prenom || !$email || !$user_role) {
+            header('Location: /ppe/Vue/Admin/AdminEditUser.php?id=' . $id . '&error=missing_fields');
+            exit();
+        }
+
+        $success = $this->userModel->adminUpdateUser($id, $nom, $prenom, $email, $user_role, $password);
+        
+        if ($success) {
+            header('Location: /ppe/Vue/Admin/AdminListUsers.php?success=user_updated');
+        } else {
+            header('Location: /ppe/Vue/Admin/AdminEditUser.php?id=' . $id . '&error=update_failed');
+        }
+        exit();
+    } catch (Exception $e) {
+        error_log("Admin user update error: " . $e->getMessage());
+        header('Location: /ppe/Vue/Admin/AdminListUsers.php?error=system');
+        exit();
+    }
 }
+	}
