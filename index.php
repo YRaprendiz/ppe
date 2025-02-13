@@ -6,6 +6,10 @@ if (session_status() === PHP_SESSION_NONE) {
 //include('Vue/Navbar.php');
 $page = isset($_GET['page']) ? $_GET['page'] : 'accueil';
 
+if (isset($_GET['error']) && $_GET['error'] == 'invalid_action') {
+    echo "<p>Error: Invalid action specified.</p>";
+}
+
 switch ($page) {
 // VuePublic
     case '404':
@@ -18,7 +22,7 @@ switch ($page) {
         include('./Vue/header.php');
         break;
     case 'footer':
-        include('./Vue/Vue/footer.php');
+        include('./Vue/footer.php');
         break;
 // Vue/Admin
     case 'adminChambreForm':

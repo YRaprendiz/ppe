@@ -14,7 +14,7 @@ if (isset($_SESSION['user'])) {
 // Error messages
 $error_messages = [
     'missing_fields' => 'Veuillez remplir tous les champs',
-    'invalid_credentials' => 'Email ou mot de passe incorrect. <p class="text-center">Pas encore inscrit? <a href="/ppe/index.php?page=register">Créez un compte ici</a></p>',
+    'invalid_credentials' => 'Email ou mot de passe incorrect. <p class="text-center">Pas encore inscrit? <a href="/ppe/index.php?page=authInscription">Créez un compte ici</a></p>',
     'system' => 'Une erreur système est survenue'
 ];
 ?>
@@ -30,7 +30,7 @@ $error_messages = [
                     </div>
                 <?php endif; ?>
 
-                <form action="/ppe/Controller/UserController.php" method="POST">
+                <form action="/ppe/Controller/AuthController.php" method="POST">
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" class="form-control" required>
@@ -43,8 +43,9 @@ $error_messages = [
 
                     <input type="hidden" name="action" value="login">
                     <button type="submit" class="btn btn-primary btn-block">Se connecter</button>
-                    <p class="text-center">Pas encore inscrit? <a href="/ppe/index.php?page=register" class="btn btn-primary btn-block">Créez un compte ici</a></p>
+                    <p class="text-center">Pas encore inscrit? <a href="/ppe/index.php?page=authInscription" class="btn btn-primary btn-block">Créez un compte ici</a></p>
                 </form>
             </div>
         </div>
     </div>
+<?php include('./Vue/footer.php'); ?>

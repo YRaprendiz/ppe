@@ -113,7 +113,7 @@ if (isset($_GET['edit']) && is_numeric($_GET['edit'])) {
                         <?php foreach ($photos as $photo): ?>
                             <div class="col">
                                 <div class="card h-100">
-                                    <img src="data:image/jpeg;base64,<?= base64_encode($photo['Images']); ?>" 
+                                    <img src="data:image/jpeg;base64,<?= base64_encode($photo['Photo']); ?>" 
                                          class="card-img-top" 
                                          alt="Photo" 
                                          style="height: 200px; object-fit: cover;">

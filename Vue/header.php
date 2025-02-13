@@ -20,6 +20,7 @@ if (session_status() == PHP_SESSION_NONE) {
             <li class="nav-item"><a class="nav-link" href="/ppe/index.php">Accueil</a></li>
             <li class="nav-item"><a class="nav-link" href="./index.php?page=userChambresList">Chambres</a></li>
             <li class="nav-item"><a class="nav-link" href="./index.php?page=userPhotoList">Photos</a></li>
+            <li class="nav-item"><a class="nav-link" href="./index.php?page=userPhotoList">Contact</a></li>
             <?php if (!isset($_SESSION['user'])): ?>
                 <li class="nav-item"><a class="nav-link" href="./index.php?page=authLogin">Login</a></li>
                 <li class="nav-item"><a class="nav-link" href="./index.php?page=authInscription">Inscription</a></li>

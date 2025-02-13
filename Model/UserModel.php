@@ -10,44 +10,18 @@ class UserModel
 		$this->bdd = $bdd;
 	}
 
-
-public function addUser($nom, $prenom, $email, $password) {
-	$hashPassword = password_hash($password, PASSWORD_BCRYPT);
-	$req = $this->bdd->prepare("INSERT INTO utilisateurs (Nom, Prenom, Email, Mdp) VALUES (:nom, :prenom, :email, :mdp)");
-		$req->bindParam(':nom', $nom);
-		$req->bindParam(':prenom', $prenom);
-		$req->bindParam(':email', $email);
-		$req->bindParam(':mdp', $hashPassword);
-
-		return $req->execute();
-	}
-
-// Replace sha1() with password_hash() and password_verify()
-public function checkLogin($email, $password) {
-	$req = $this->bdd->prepare("SELECT * FROM utilisateurs WHERE Email = :email");
-	$req->bindParam(':email', $email);
-	$req->execute();
-	$user = $req->fetch(PDO::FETCH_ASSOC);
-
-	if ($user && password_verify($password, $user['Mdp'])) {
-		// Remove sensitive information before storing in session
-		unset($user['Mdp']);
-		return $user;
-	}
-	return false;
-}
-
 	public function getAllUsers()
     {
         $req = $this->bdd->query("SELECT * FROM Utilisateurs");
         return $req->fetchAll();
     }
+
 	public function getUserById($id) {
         $stmt = $this->bdd->prepare("SELECT * FROM Utilisateurs WHERE ID_Utilisateur = ?");
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-	////
+
 	public function updateUser($id, $nom, $prenom, $email, $password = null, $image = null)
 	{
     $params = [
@@ -75,6 +49,7 @@ public function checkLogin($email, $password) {
     $req = $this->bdd->prepare($sql);
     return $req->execute($params);
 }
+
 public function adminUpdateUser($id, $nom, $prenom, $email, $user_role, $password = null)
 {
 	$params = [
@@ -98,14 +73,6 @@ public function adminUpdateUser($id, $nom, $prenom, $email, $user_role, $passwor
 	$req = $this->bdd->prepare($sql);
 	return $req->execute($params);
 }
-
-public function getUserReservations($userId) {
-	$stmt = $this->bdd->prepare("SELECT * FROM reservations WHERE user_id = :user_id");
-	$stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
-	$stmt->execute();
-	return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-
 
 }
 ?>

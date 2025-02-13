@@ -2,11 +2,14 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
- if (!isset($_SESSION['user']) || $_SESSION['user']['User_role'] !== 'Admin') 
- {
-    echo '<h1>Accès refusé .' . htmlspecialchars($_SESSION['user']['Email']) . ' . </h1>';
+if (!isset($_SESSION['user']) || $_SESSION['user']['User_role'] !== 'Admin') {
+    echo '<h1>Accès refusé';
+    if (isset($_SESSION['user']['Email'])) {
+        echo ' ' . htmlspecialchars($_SESSION['user']['Email']);
+    }
+    echo '.</h1>';
     exit();
- }
+}
 require_once(__DIR__ . '/../../Bdd/bdd.php');
 require_once(__DIR__ . '/../../Controller/ChambreController.php');
 
@@ -121,4 +124,4 @@ $chambres = $controller->getAllChambres();
         </div>
     </div>
 </div>
-<?php include('../Footer.php'); ?>
+<?php include('./Vue/Footer.php'); ?>

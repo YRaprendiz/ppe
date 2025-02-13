@@ -28,22 +28,20 @@
             <tbody>
             <tr><td>indexLinks|</td>
                     <td><a class="indexLinks" href="/ppe/index.php?page=accueil"                  >Accueil</a>                                  |</td>
-                    <td><a class="indexLinks" href="index.php?page=header"                        >Header</a>                                   |</td>                                                 
-                    <td><a class="indexLinks" href="index.php?page=footer"                        >Footer</a>                                   |</td></tr>
-                <tr><td><a class="indexLinks" href="index.php?page=adminChambreForm"              >Admin Chambre Form</a>                       |</td>
-                    <td><a class="indexLinks" href="index.php?page=adminEditProfile"              >Admin Edit Profile</a>                       |</td>
-                    <td><a class="indexLinks" href="index.php?page=adminListUser"                 >Admin List User</a>                          |</td>
-                    <td><a class="indexLinks" href="index.php?page=adminPhotoForm"                >Admin Photo Form</a>                         |</td>
-                    <td><a class="indexLinks" href="index.php?page=adminReservationForm"          >Admin Reservation Form</a>                   |</td></tr>
-                <tr><td><a class="indexLinks" href="index.php?page=login"                         >Login</a>                                    |</td>
-                    <td><a class="indexLinks" href="index.php?page=logout"                        >Logout</a>                                   |</td>
-                    <td><a class="indexLinks" href="index.php?page=authInscription"               >Auth Inscription</a>                         |</td>
-                    <td><a class="indexLinks" href="index.php?page=authLogin"                     >Auth Login</a>                               |</td>
-                    <td><a class="indexLinks" href="index.php?page=authLogout"                    >Auth Logout</a>                              |</td></tr>
-                <tr><td><a class="indexLinks" href="index.php?page=userChambresList"              >User Chambres List</a>                       |</td>
-                    <td><a class="indexLinks" href="index.php?page=userPhotoList"                 >User Photo List</a>                          |</td>
-                    <td><a class="indexLinks" href="index.php?page=userMesReservationList"           >User Reservation List</a>                    |</td>
-                    <td><a class="indexLinks" href="index.php?page=userProfil"                    >User Profil</a>                              |</td></tr>
+                    <td><a class="indexLinks" href="/ppe/index.php?page=header"                        >Header</a>                                   |</td>                                                 
+                    <td><a class="indexLinks" href="/ppe/index.php?page=footer"                        >Footer</a>                                   |</td></tr>
+                <tr><td><a class="indexLinks" href="/ppe/index.php?page=adminChambreForm"              >Admin Chambre Form</a>                       |</td>
+                    <td><a class="indexLinks" href="/ppe/index.php?page=adminEditProfile"              >Admin Edit Profile</a>                       |</td>
+                    <td><a class="indexLinks" href="/ppe/index.php?page=adminListUser"                 >Admin List User</a>                          |</td>
+                    <td><a class="indexLinks" href="/ppe/index.php?page=adminPhotoForm"                >Admin Photo Form</a>                         |</td>
+                    <td><a class="indexLinks" href="/ppe/index.php?page=adminReservationForm"          >Admin Reservation Form</a>                   |</td></tr>
+                <tr><td><a class="indexLinks" href="/ppe/index.php?page=authInscription"               >Auth Inscription</a>                         |</td>
+                    <td><a class="indexLinks" href="/ppe/index.php?page=authLogin"                     >Auth Login</a>                               |</td>
+                    <td><a class="indexLinks" href="/ppe/index.php?page=authLogout"                    >Auth Logout</a>                              |</td></tr>
+                <tr><td><a class="indexLinks" href="/ppe/index.php?page=userChambresList"              >User Chambres List</a>                       |</td>
+                    <td><a class="indexLinks" href="/ppe/index.php?page=userPhotoList"                 >User Photo List</a>                          |</td>
+                    <td><a class="indexLinks" href="/ppe/index.php?page=userMesReservationList"           >User Reservation List</a>                    |</td>
+                    <td><a class="indexLinks" href="/ppe/index.php?page=userProfil"                    >User Profil</a>                              |</td></tr>
             </tbody>
         </table>
         <table class="footer-table">

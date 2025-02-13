@@ -48,7 +48,7 @@ try {
         <?php foreach ($photos as $photo): ?>
             <div class="col-md-6 col-lg-4">
                 <div class="card h-100">
-                    <img src="data:image/jpeg;base64,<?= base64_encode($photo['Images']) ?>"
+                    <img src="data:image/jpeg;base64,<?= base64_encode($photo['Photo']) ?>"
                          class="card-img-top"
                          alt="Photo de chambre"
                          style="height: 200px; object-fit: cover;">
@@ -59,7 +59,7 @@ try {
                                 <small class="text-muted">
                                     <i class="bi bi-door-closed"></i>
                                     Chambre <?= htmlspecialchars($photo['ID_Chambre']); ?>
-                                    (<?= htmlspecialchars($photo['Type_Chambre']); ?>)
+
                                 </small>
                             </p>
                         <?php endif; ?>

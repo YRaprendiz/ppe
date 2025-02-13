@@ -68,18 +68,6 @@ $reservations = $reservationModel->getReservationsByUser($_SESSION['user']['ID_U
                                 <p class="badge bg-secondary">Rôle: <?php echo htmlspecialchars($user['User_role']); ?></p>
                             </div>
 
-                            <div class="d-flex justify-content-center gap-3">
-                                <a href="/ppe/Vue/Admin/AdminEditProfile.php" class="btn btn-primary">
-                                    <i class="bi bi-pencil-fill me-2"></i>Modifier le profil
-                                </a>
-                                <form action="/ppe/Controller/UserController.php" method="POST" class="d-inline">
-                                    <input type="hidden" name="action" value="logout">
-                                    <button type="submit" class="btn btn-danger">
-                                        <i class="bi bi-box-arrow-right me-2"></i>Se déconnecter
-                                    </button>
-                                </form>
-                            </div>
-
                             <h3 class="mt-5">Mes Réservations</h3>
                             <?php if (!empty($reservations)): ?>
                                 <div class="table-responsive">
