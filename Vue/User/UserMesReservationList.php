@@ -64,13 +64,10 @@ $reservations = $reservationModel->getReservationsByUser($_SESSION['user']['ID_U
                             </div>
                             <?php if ($reservation['Statut_Reservation'] === 'Confirmée'): ?>
                                 <div class="card-footer">
-                                    <form action="/ppe/Controller/ReservationController.php" method="POST" 
-                                          onsubmit="return confirm('Êtes-vous sûr de vouloir annuler cette réservation ?');">
+                                    <form action="/ppe/Controller/ReservationController.php" method="POST">
                                         <input type="hidden" name="action" value="cancelReservation">
                                         <input type="hidden" name="id" value="<?php echo $reservation['ID_Reservation']; ?>">
-                                        <button type="submit" class="btn btn-danger w-100">
-                                            <i class="bi bi-x-circle"></i> Annuler la réservation
-                                        </button>
+                                        <button type="submit" class="btn btn-danger">Annuler</button>
                                     </form>
                                 </div>
                             <?php endif; ?>

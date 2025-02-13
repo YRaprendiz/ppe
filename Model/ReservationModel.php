@@ -78,7 +78,7 @@ class ReservationModel {
             // Update the reservation status to cancelled (0)
             $req = $this->bdd->prepare("
                 UPDATE Reservations 
-                SET Statut = 0 
+                SET Statut_Reservation = 'Annulée' 
                 WHERE ID_Reservation = :id
             ");
             
@@ -97,9 +97,7 @@ class ReservationModel {
                 WHERE ID_Chambres = :chambre_id
                 AND Statut_Reservation IN ('En attente', 'Confirmée')
                 AND (
-                    (Date_Debut <= :date_debut AND Date_Fin >= :date_debut)
-                    OR (Date_Debut <= :date_fin AND Date_Fin >= :date_fin)
-                    OR (Date_Debut >= :date_debut AND Date_Fin <= :date_fin)
+                    (Date_Debut <= :date_fin AND Date_Fin >= :date_debut)
                 )
             ");
             
@@ -120,13 +118,11 @@ class ReservationModel {
     public function getActiveReservationsForRoom($chambreId) {
         try {
             $req = $this->bdd->prepare("
-                SELECT r.*, u.Nom, u.Prenom
-                FROM Reservations r
-                JOIN Utilisateurs u ON r.ID_Utilisateur = u.ID_Utilisateur
-                WHERE r.ID_Chambres = :chambre_id
-                AND r.Statut = 1
-                AND r.Date_Fin >= CURRENT_DATE
-                ORDER BY r.Date_Debut
+                SELECT *
+                FROM Reservations
+                WHERE ID_Chambres = :chambre_id
+                AND Statut_Reservation IN ('En attente', 'Confirmée')
+                ORDER BY Date_Debut
             ");
             
             $req->execute([':chambre_id' => $chambreId]);

@@ -52,37 +52,21 @@ if (!$chambre['Statut']) {
 
                 <div class="mb-3">
                     <label for="date_debut" class="form-label">Date d'arrivée</label>
-                    <input type="date" class="form-control" id="date_debut" name="date_debut" 
-                           min="<?= date('Y-m-d') ?>" required>
+                    <input type="date" class="form-control" id="date_debut" name="date_debut" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="date_fin" class="form-label">Date de départ</label>
-                    <input type="date" class="form-control" id="date_fin" name="date_fin" 
-                           min="<?= date('Y-m-d', strtotime('+1 day')) ?>" required>
+                    <input type="date" class="form-control" id="date_fin" name="date_fin" required>
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Prix par nuit</label>
-                    <div class="form-control-plaintext">
-                        <?= number_format($chambre['Prix'], 2, ',', ' ') ?> €
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Prix total</label>
-                    <div id="prix_total" class="form-control-plaintext">
-                        -- €
-                    </div>
+                    <label for="prix_total" class="form-label">Prix Total</label>
+                    <p id="prix_total">-- €</p>
                 </div>
 
                 <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-calendar-check"></i> Confirmer la réservation
-                    </button>
-                    <a href="index.php?page=userChambresList" class="btn btn-outline-secondary">
-                        <i class="bi bi-arrow-left"></i> Retour aux chambres
-                    </a>
+                    <button type="submit" class="btn btn-primary">Réserver</button>
                 </div>
             </form>
         </div>
