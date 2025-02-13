@@ -98,5 +98,14 @@ public function adminUpdateUser($id, $nom, $prenom, $email, $user_role, $passwor
 	$req = $this->bdd->prepare($sql);
 	return $req->execute($params);
 }
+
+public function getUserReservations($userId) {
+	$stmt = $this->bdd->prepare("SELECT * FROM reservations WHERE user_id = :user_id");
+	$stmt->bindParam(':user_id', $userId, PDO::PARAM_INT);
+	$stmt->execute();
+	return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
 }
 ?>

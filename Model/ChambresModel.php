@@ -86,5 +86,12 @@ class ChambresModel {
             return false;
         }
     }
+
+    public function getPhotosByChambreId($chambreId) {
+        $stmt = $this->bdd->prepare("SELECT Photo FROM Photos WHERE ID_Chambre = :chambreId");
+        $stmt->bindParam(':chambreId', $chambreId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>

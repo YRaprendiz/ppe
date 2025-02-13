@@ -9,7 +9,7 @@ class PhotoModel {
     }
 
     public function ajouterPhoto($image, $description, $chambreId = null) {
-        $req = $this->bdd->prepare("INSERT INTO Photos (Images, Description, ID_Chambre) VALUES (:image, :description, :id_chambre)");
+        $req = $this->bdd->prepare("INSERT INTO Photos (Photo, Description, ID_Chambre) VALUES (:image, :description, :id_chambre)");
         $req->bindParam(':image', $image, PDO::PARAM_LOB);
         $req->bindParam(':description', $description);
         $req->bindParam(':id_chambre', $chambreId, PDO::PARAM_INT);
@@ -39,14 +39,9 @@ class PhotoModel {
     }
 
     public function getPhotos() {
-        $req = $this->bdd->prepare("
-            SELECT p.*, c.Type_Chambre 
-            FROM Photos p 
-            LEFT JOIN Chambres c ON p.ID_Chambre = c.ID_Chambres
-            ORDER BY p.ID_Photos DESC
-        ");
-        $req->execute();
-        return $req->fetchAll(PDO::FETCH_ASSOC);
+        $query = $this->bdd->prepare("SELECT * FROM photos");
+        $query->execute();
+        return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getPhotosByChambre($chambreId) {

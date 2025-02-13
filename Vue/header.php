@@ -44,10 +44,10 @@ if (session_status() == PHP_SESSION_NONE) {
             <?php if (isset($_SESSION['user']) && $_SESSION['user']['User_role'] === 'Admin'): ?>
                 <ul class="nav nav-pills justify-content-center mt-3">
                     <li class="nav-item"><a class="nav-link text-danger" href="./index.php?page=adminChambreForm">Admin Chambre Form</a></li>
-                    <li class="nav-item"><a class="nav-link text-danger" href="./index.php?page=adminEditProfile">Admin Edit Profile</a></li>
-                    <li class="nav-item"><a class="nav-link text-danger" href="./index.php?page=adminListUser">Admin List User</a></li>
                     <li class="nav-item"><a class="nav-link text-danger" href="./index.php?page=adminPhotoForm">Admin Photo Form</a></li>
                     <li class="nav-item"><a class="nav-link text-danger" href="./index.php?page=adminReservationForm">Admin Reservation Form</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger" href="./index.php?page=adminEditProfile">Admin Edit Profile</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger" href="./index.php?page=adminListUser">Admin List User</a></li>
                 </ul>
             <?php endif; ?>
 

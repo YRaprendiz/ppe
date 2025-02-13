@@ -6,10 +6,13 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require_once(__DIR__ . '/../../Bdd/bdd.php');
 require_once(__DIR__ . '/../../Model/UserModel.php');
+require_once(__DIR__ . '/../../Model/ReservationModel.php');
 
 $userModel = new UserModel($bdd);
-$user = $userModel->getUserById($_SESSION['user']['ID_Utilisateur']);
+$reservationModel = new ReservationModel($bdd);
 
+$user = $userModel->getUserById($_SESSION['user']['ID_Utilisateur']);
+$reservations = $reservationModel->getReservationsByUser($_SESSION['user']['ID_Utilisateur']);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -76,6 +79,38 @@ $user = $userModel->getUserById($_SESSION['user']['ID_Utilisateur']);
                                     </button>
                                 </form>
                             </div>
+
+                            <h3 class="mt-5">Mes Réservations</h3>
+                            <?php if (!empty($reservations)): ?>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Chambre</th>
+                                                <th>Date d'arrivée</th>
+                                                <th>Date de départ</th>
+                                                <th>Prix Total</th>
+                                                <th>Statut</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($reservations as $reservation): ?>
+                                                <tr>
+                                                    <td><?= htmlspecialchars($reservation['ID_Reservation']) ?></td>
+                                                    <td><?= htmlspecialchars($reservation['ID_Chambres']) ?></td>
+                                                    <td><?= htmlspecialchars($reservation['Date_Debut']) ?></td>
+                                                    <td><?= htmlspecialchars($reservation['Date_Fin']) ?></td>
+                                                    <td><?= htmlspecialchars($reservation['Prix_Total']) ?> €</td>
+                                                    <td><?= htmlspecialchars($reservation['Statut_Reservation']) ?></td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            <?php else: ?>
+                                <p class="text-center text-muted">Aucune réservation trouvée</p>
+                            <?php endif; ?>
                         <?php else: ?>
                             <div class="alert alert-warning text-center" role="alert">
                                 Utilisateur non trouvé

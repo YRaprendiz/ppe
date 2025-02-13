@@ -72,6 +72,7 @@ $users = $userController->listUsers();
                                             <div class="btn-group" role="group">
                                                 <a href="AdminEditUser.php?id=<?= $user['ID_Utilisateur'] ?>" class="btn btn-sm btn-warning">Modifier</a>
                                                 <a href="/ppe/Controller/UserController.php?action=delete&id=<?= $user['ID_Utilisateur'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')">Supprimer</a>
+                                                <a href="/ppe/Vue/User/UserProfil.php?id=<?= $user['ID_Utilisateur'] ?>" class="btn btn-sm btn-info">Voir Réservations</a>
                                             </div>
                                         </td>
                                     </tr>

@@ -8,7 +8,7 @@ require_once(__DIR__ . '/../../Model/ReservationModel.php');
 
 // Check if user is logged in
 if (!isset($_SESSION['user'])) {
-    header('Location: /ppe/index.php?page=login');
+    header('Location: /ppe/index.php?page=authLogin');
     exit();
 }
 
@@ -16,7 +16,7 @@ $reservationModel = new ReservationModel($bdd);
 $reservations = $reservationModel->getReservationsByUser($_SESSION['user']['ID_Utilisateur']);
 ?>
 
-<?php include('./vue/header.php'); ?>
+<?php include('/xampp/htdocs/ppe/Vue/Header.php'); ?>
     <div class="container py-5">
         <h1 class="mb-4">Mes Réservations</h1>
 
@@ -39,8 +39,8 @@ $reservations = $reservationModel->getReservationsByUser($_SESSION['user']['ID_U
                         <div class="card h-100">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h5 class="card-title mb-0">Chambre <?php echo htmlspecialchars($reservation['ID_Chambres']); ?></h5>
-                                <span class="badge <?php echo $reservation['Statut'] ? 'bg-success' : 'bg-danger'; ?>">
-                                    <?php echo $reservation['Statut'] ? 'Active' : 'Annulée'; ?>
+                                <span class="badge <?php echo $reservation['Statut_Reservation'] === 'Confirmée' ? 'bg-success' : 'bg-danger'; ?>">
+                                    <?php echo htmlspecialchars($reservation['Statut_Reservation']); ?>
                                 </span>
                             </div>
                             <div class="card-body">
@@ -62,7 +62,7 @@ $reservations = $reservationModel->getReservationsByUser($_SESSION['user']['ID_U
                                     </li>
                                 </ul>
                             </div>
-                            <?php if ($reservation['Statut']): ?>
+                            <?php if ($reservation['Statut_Reservation'] === 'Confirmée'): ?>
                                 <div class="card-footer">
                                     <form action="/ppe/Controller/ReservationController.php" method="POST" 
                                           onsubmit="return confirm('Êtes-vous sûr de vouloir annuler cette réservation ?');">
@@ -91,4 +91,4 @@ $reservations = $reservationModel->getReservationsByUser($_SESSION['user']['ID_U
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<?php include '/xampp/htdocs/ppe/Vue/Footer.php';?>
+<?php include('/xampp/htdocs/ppe/Vue/Footer.php'); ?>

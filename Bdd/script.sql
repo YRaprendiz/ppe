@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS Utilisateurs (
 
 CREATE TABLE IF NOT EXISTS Photos (
     ID_Photos INT NOT NULL AUTO_INCREMENT,
-
+    Photo LONGBLOB NOT NULL, -- Ensure this column exists for storing photo data
     Description VARCHAR(100) NOT NULL,
     ID_Chambre INT,
     PRIMARY KEY (ID_Photos)

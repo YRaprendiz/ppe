@@ -9,8 +9,8 @@ class ReservationModel {
     public function createReservation($userId, $chambreId, $dateDebut, $dateFin, $prixTotal) {
         try {
             $req = $this->bdd->prepare("
-                INSERT INTO Reservations (ID_Utilisateur, ID_Chambres, Date_Debut, Date_Fin, Prix_Total, Statut)
-                VALUES (:user_id, :chambre_id, :date_debut, :date_fin, :prix_total, 1)
+                INSERT INTO Reservations (ID_Utilisateur, ID_Chambres, Date_Debut, Date_Fin, Prix_Total, Statut_Reservation)
+                VALUES (:user_id, :chambre_id, :date_debut, :date_fin, :prix_total, 'En attente')
             ");
 
             return $req->execute([
@@ -95,7 +95,7 @@ class ReservationModel {
                 SELECT COUNT(*) as count
                 FROM Reservations
                 WHERE ID_Chambres = :chambre_id
-                AND Statut = 1
+                AND Statut_Reservation IN ('En attente', 'Confirmée')
                 AND (
                     (Date_Debut <= :date_debut AND Date_Fin >= :date_debut)
                     OR (Date_Debut <= :date_fin AND Date_Fin >= :date_fin)
@@ -137,3 +137,4 @@ class ReservationModel {
         }
     }
 }
+?>

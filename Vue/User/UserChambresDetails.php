@@ -21,6 +21,7 @@ $chambreModel = new ChambresModel($bdd);
 $reservationModel = new ReservationModel($bdd);
 
 $chambre = $chambreModel->getChambreById($_GET['chambre_id']);
+$photos = $chambreModel->getPhotosByChambreId($_GET['chambre_id']);
 
 if (!$chambre) {
     header('Location: index.php?page=userChambresList&error=Chambre introuvable');
@@ -34,7 +35,7 @@ if (!$chambre['Statut']) {
 ?>
 <?php include('/xampp/htdocs/ppe/Vue/Header.php'); ?>
 <div class="container py-4">
-    <h1 class="mb-4">Réserver la Chambre <?= htmlspecialchars($chambre['ID_Chambres']) ?></h1>
+    <h1 class="mb-4">Détails de la Chambre <?= htmlspecialchars($chambre['ID_Chambres']) ?></h1>
 
     <?php if (isset($_GET['error'])): ?>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -43,8 +44,30 @@ if (!$chambre['Statut']) {
         </div>
     <?php endif; ?>
 
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Chambre <?= htmlspecialchars($chambre['ID_Chambres']); ?></h5>
+            <p class="card-text"><?= htmlspecialchars($chambre['Description']); ?></p>
+            <p class="card-text"><strong>Prix:</strong> <?= number_format($chambre['Prix'], 2, ',', ' '); ?> € par nuit</p>
+            <div class="mb-3">
+                <label class="form-label">Photos</label>
+                <div class="d-flex flex-wrap">
+                    <?php if (!empty($photos)): ?>
+                        <?php foreach ($photos as $photo): ?>
+                            <img src="data:image/jpeg;base64,<?= base64_encode($photo['Photo']); ?>" 
+                                 class="img-thumbnail me-2 mb-2" alt="Chambre Image" style="height: 200px; object-fit: cover;">
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="text-muted">Aucune photo disponible</p>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="card shadow-sm">
         <div class="card-body">
+            <h2 class="h4 mb-4">Réserver cette chambre</h2>
             <form action="/ppe/Controller/ReservationController.php" method="POST">
                 <input type="hidden" name="action" value="createReservation">
                 <input type="hidden" name="chambre_id" value="<?= $chambre['ID_Chambres'] ?>">

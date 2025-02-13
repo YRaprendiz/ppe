@@ -75,3 +75,29 @@ class ControleurPhoto {
 
 $controleur = new ControleurPhoto($bdd);
 $controleur->gererRequete();
+
+class PhotoController {
+    private $photoModel;
+
+    public function __construct() {
+        $this->photoModel = new PhotoModel($GLOBALS['bdd']);
+    }
+
+    public function getPhotos() {
+        $photos = $this->photoModel->getPhotos();
+        $photo4 = null;
+        $photo5 = null;
+
+        foreach ($photos as $photo) {
+            if ($photo['ID_Photos'] == 4) {
+                $photo4 = $photo;
+            }
+            if ($photo['ID_Photos'] == 5) {
+                $photo5 = $photo;
+            }
+        }
+
+        return ['photo4' => $photo4, 'photo5' => $photo5];
+    }
+}
+?>
