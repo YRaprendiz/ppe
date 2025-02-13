@@ -29,7 +29,7 @@ $error_messages = [
                     </div>
                 <?php endif; ?>
 
-                <form action="/ppe/Controller/AuthController.php" method="POST">
+                <form action="/ppe/Controller/AuthController.php" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="nom">Nom</label>
                         <input type="text" id="nom" name="nom" class="form-control" required>
@@ -48,6 +48,11 @@ $error_messages = [
                     <div class="form-group">
                         <label for="password">Mot de passe</label>
                         <input type="password" id="password" name="password" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="profileImage">Image de profil (optionnel)</label>
+                        <input type="file" id="profileImage" name="profileImage" class="form-control">
                     </div>
 
                     <input type="hidden" name="action" value="inscription">

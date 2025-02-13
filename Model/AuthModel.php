@@ -8,14 +8,15 @@ class AuthModel
         $this->bdd = $bdd;
     }
 
-    public function addUser($nom, $prenom, $email, $password)
+    public function addUser($nom, $prenom, $email, $password, $image = null)
     {
         $hashPassword = password_hash($password, PASSWORD_BCRYPT);
-        $req = $this->bdd->prepare("INSERT INTO utilisateurs (Nom, Prenom, Email, Mdp) VALUES (:nom, :prenom, :email, :mdp)");
+        $req = $this->bdd->prepare("INSERT INTO utilisateurs (Nom, Prenom, Email, Mdp, Images) VALUES (:nom, :prenom, :email, :mdp, :image)");
         $req->bindParam(':nom', $nom);
         $req->bindParam(':prenom', $prenom);
         $req->bindParam(':email', $email);
         $req->bindParam(':mdp', $hashPassword);
+        $req->bindParam(':image', $image, PDO::PARAM_LOB);
 
         return $req->execute();
     }

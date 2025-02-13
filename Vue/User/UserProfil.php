@@ -1,7 +1,13 @@
 <?php
-// Check if session is not already started
+// Start session if not already started
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
+}
+
+// Redirect to login if user is not logged in
+if (!isset($_SESSION['user'])) {
+    header('Location: /ppe/Vue/Auth/AuthLogin.php');
+    exit();
 }
 
 require_once(__DIR__ . '/../../Bdd/bdd.php');

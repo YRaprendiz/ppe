@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS Utilisateurs (
     Email VARCHAR(100) NOT NULL UNIQUE,
     Mdp VARCHAR(255) NOT NULL,
     User_role ENUM('Admin', 'Client') DEFAULT 'Client',
-    Images LONGBLOB NOT NULL,
+    Images LONGBLOB,
     PRIMARY KEY (ID_Utilisateur)
 );
 

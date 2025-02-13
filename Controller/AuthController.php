@@ -43,14 +43,29 @@ class AuthController
                 exit();
             }
 
+            $image = null;
+            if (isset($_FILES['profileImage']) && $_FILES['profileImage']['error'] == 0) {
+                $maxFileSize = 5 * 1024 * 1024;
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+
+                if ($_FILES['profileImage']['size'] <= $maxFileSize && in_array($_FILES['profileImage']['type'], $allowedTypes)) {
+                    $image = file_get_contents($_FILES['profileImage']['tmp_name']);
+                }
+            }
+
             $success = $this->authModel->addUser(
                 $_POST['nom'],
                 $_POST['prenom'],
                 $_POST['email'],
-                $_POST['password']
+                $_POST['password'],
+                $image
             );
 
             if ($success) {
+                $user = $this->authModel->checkLogin($_POST['email'], $_POST['password']);
+                if ($user) {
+                    $_SESSION['user'] = $user;
+                }
                 header('Location: /ppe/index.php?page=userProfil&success=registration_completed');
                 exit();
             } else {
@@ -92,11 +107,26 @@ class AuthController
 
     public function logout()
     {
-        session_start();
-        session_unset();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Clear all session data
+        $_SESSION = array();
+
+        // Destroy the session
         session_destroy();
-        
-        header('Location: /ppe/index.php?page=accueil');
+
+        // Delete the session cookie
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
+
+        header('Location: /ppe/index.php?page=authLogin');
         exit();
     }
 }
