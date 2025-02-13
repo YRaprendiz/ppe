@@ -68,6 +68,129 @@ $reservations = $reservationModel->getReservationsByUser($_SESSION['user']['ID_U
                                 <p class="badge bg-secondary">Rôle: <?php echo htmlspecialchars($user['User_role']); ?></p>
                             </div>
 
+                            <!-- Dropdown form to update name -->
+                            <div class="dropdown mb-4">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonName" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Mettre à jour le nom
+                                </button>
+                                <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuButtonName">
+                                    <li>
+                                        <form action="/ppe/Controller/UserController.php" method="post">
+                                            <input type="hidden" name="action" value="updateName">
+                                            <div class="mb-3">
+                                                <label for="prenom" class="form-label">Prénom</label>
+                                                <input type="text" class="form-control" id="prenom" name="prenom" value="<?= htmlspecialchars($user['Prenom']) ?>" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="nom" class="form-label">Nom</label>
+                                                <input type="text" class="form-control" id="nom" name="nom" value="<?= htmlspecialchars($user['Nom']) ?>" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Mettre à jour le nom</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Dropdown form to update email -->
+                            <div class="dropdown mb-4">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonEmail" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Mettre à jour l'email
+                                </button>
+                                <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuButtonEmail">
+                                    <li>
+                                        <form action="/ppe/Controller/UserController.php" method="post">
+                                            <input type="hidden" name="action" value="updateEmail">
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">Email</label>
+                                                <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($user['Email']) ?>" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Mettre à jour l'email</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Dropdown form to update password -->
+                            <div class="dropdown mb-4">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonPassword" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Mettre à jour le mot de passe
+                                </button>
+                                <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuButtonPassword">
+                                    <li>
+                                        <form action="/ppe/Controller/UserController.php" method="post">
+                                            <input type="hidden" name="action" value="updatePassword">
+                                            <div class="mb-3">
+                                                <label for="password" class="form-label">Nouveau mot de passe</label>
+                                                <input type="password" class="form-control" id="password" name="password" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="confirmPassword" class="form-label">Confirmer le mot de passe</label>
+                                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary" onclick="return confirm('Êtes-vous sûr de vouloir modifier votre mot de passe ?')">Mettre à jour le mot de passe</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Dropdown form to update profile image -->
+                            <div class="dropdown mb-4">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonImage" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Mettre à jour la photo de profil
+                                </button>
+                                <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuButtonImage">
+                                    <li>
+                                        <form action="/ppe/Controller/UserController.php" method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="action" value="updateProfileImage">
+                                            <div class="mb-3">
+                                                <label for="profileImage" class="form-label">Photo de profil</label>
+                                                <input type="file" class="form-control" id="profileImage" name="profileImage" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Mettre à jour la photo de profil</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Dropdown form to update all information -->
+                            <div class="dropdown mb-4">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonAll" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Mettre à jour toutes les informations
+                                </button>
+                                <ul class="dropdown-menu p-3" aria-labelledby="dropdownMenuButtonAll">
+                                    <li>
+                                        <form action="/ppe/Controller/UserController.php" method="post" enctype="multipart/form-data">
+                                            <input type="hidden" name="action" value="updateAll">
+                                            <div class="mb-3">
+                                                <label for="prenom" class="form-label">Prénom</label>
+                                                <input type="text" class="form-control" id="prenom" name="prenom" value="<?= htmlspecialchars($user['Prenom']) ?>" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="nom" class="form-label">Nom</label>
+                                                <input type="text" class="form-control" id="nom" name="nom" value="<?= htmlspecialchars($user['Nom']) ?>" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">Email</label>
+                                                <input type="email" class="form-control" id="email" name="email" value="<?= htmlspecialchars($user['Email']) ?>" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="password" class="form-label">Nouveau mot de passe</label>
+                                                <input type="password" class="form-control" id="password" name="password">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="confirmPassword" class="form-label">Confirmer le mot de passe</label>
+                                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="profileImage" class="form-label">Photo de profil</label>
+                                                <input type="file" class="form-control" id="profileImage" name="profileImage">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Mettre à jour toutes les informations</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+
                             <h3 class="mt-5">Mes Réservations</h3>
                             <?php if (!empty($reservations)): ?>
                                 <div class="table-responsive">

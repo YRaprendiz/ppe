@@ -1,6 +1,6 @@
-<form method="POST" action="/ppe/Controller/UserController.php">
-        <input type="hidden" name="action" value="logout">
-        <button type="submit" class="btn btn-primary btn-block">Logout</button>
+<form method="POST" action="/ppe/Controller/AuthController.php">
+    <input type="hidden" name="action" value="logout">
+    <button type="submit" class="btn btn-primary btn-block">Logout</button>
 </form>
 <?php
 if (session_status() === PHP_SESSION_NONE) {

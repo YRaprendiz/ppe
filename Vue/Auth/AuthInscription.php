@@ -29,7 +29,7 @@ $error_messages = [
                     </div>
                 <?php endif; ?>
 
-                <form action="/ppe/Controller/UserController.php" method="POST">
+                <form action="/ppe/Controller/AuthController.php" method="POST">
                     <div class="form-group">
                         <label for="nom">Nom</label>
                         <input type="text" id="nom" name="nom" class="form-control" required>
@@ -55,9 +55,9 @@ $error_messages = [
                 </form>
 
                 <div class="text-center">
-                    Déjà inscrit? <a href="/ppe/Vue/User/UserLogin.php" class="btn btn-primary btn-block">Se connecter</a>
+                    Déjà inscrit? <a href="/ppe/Vue/Auth/AuthLogin.php" class="btn btn-primary btn-block">Se connecter</a>
                 </div>
             </div>
         </div>
     </div>
-<?php include '/xampp/htdocs/ppe/Vue/Footer.php';?>
+<?php include('./Vue/footer.php'); ?>
