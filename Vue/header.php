@@ -14,7 +14,6 @@ if (session_status() == PHP_SESSION_NONE) {
 </head>
 <body>
 
-
     <nav class="my-4">
         <ul class="nav nav-pills justify-content-center">
             <li class="nav-item"><a class="nav-link" href="/ppe/index.php">Accueil</a></li>
@@ -51,8 +50,10 @@ if (session_status() == PHP_SESSION_NONE) {
                     <li class="nav-item"><a class="nav-link text-danger" href="./index.php?page=adminListUser">Admin List User</a></li>
                 </ul>
             <?php endif; ?>
-
-        
-        
         </ul>
     </nav>
+
+    <?php include 'messages.php'; ?>
+
+</body>
+</html>

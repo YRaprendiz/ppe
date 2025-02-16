@@ -2,7 +2,7 @@
 session_start();
 
 require_once(__DIR__ . '/../Bdd/bdd.php');
-require_once(__DIR__ . '/../Model/ReservationModel.php');
+require_once(__DIR__ . '/../Model/UserReservationModel.php');
 require_once(__DIR__ . '/../Model/ChambresModel.php');
 
 if (!isset($_SESSION['user'])) {
@@ -10,7 +10,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-$reservationModel = new ReservationModel($bdd);
+$UserReservationModel = new UserReservationModel($bdd);
 $chambreModel = new ChambresModel($bdd);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     switch ($action) {
         case 'createReservation':
-            if (!isset($_POST['chambre_id'], $_POST['date_debut'], $_POST['date_fin'], $_POST['prix_par_nuit'])) {
+            if (!isset($_POST['chambre_id'], $_POST['date_debut'], $_POST['date_fin'], $_POST['prix'])) {
                 header('Location: /ppe/index.php?page=userChambresList&error=Données manquantes');
                 exit();
             }
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $chambreId = $_POST['chambre_id'];
             $dateDebut = $_POST['date_debut'];
             $dateFin = $_POST['date_fin'];
-            $prixParNuit = floatval($_POST['prix_par_nuit']);
+            $prixParNuit = floatval($_POST['prix']);
 
             // Validate dates
             $today = new DateTime();
@@ -71,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             )) {
                 header('Location: /ppe/index.php?page=userMesReservationList&message=Réservation créée avec succès');
             } else {
+                error_log("Error creating reservation for user ID: " . $_SESSION['user']['ID_Utilisateur']);
                 header("Location: /ppe/index.php?page=userChambresList&error=Erreur lors de la création de la réservation");
             }
             break;

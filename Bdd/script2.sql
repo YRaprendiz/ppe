@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS Reservations (
     Date_Debut DATETIME NOT NULL,
     Date_Fin DATETIME NOT NULL,
     Nombre_Personnes INT NOT NULL DEFAULT 1,
-    Prix_Total DECIMAL(10,2) NOT NULL,
+    Prix DECIMAL(10,2) NOT NULL,
     Statut_Reservation ENUM('En attente', 'Confirmée', 'Annulée', 'Terminée') NOT NULL DEFAULT 'En attente',
     Methode_Paiement ENUM('Carte Crédit', 'Paypal', 'Espèces', 'Virement') NULL,
     Date_Reservation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

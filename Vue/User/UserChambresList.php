@@ -14,20 +14,6 @@ $chambres = $chambreModel->getAllChambres();
 <div class="container py-5">
     <h1 class="mb-4">Liste des Chambres</h1>
 
-    <?php if (isset($_GET['error'])): ?>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <?php echo htmlspecialchars($_GET['error']); ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <?php endif; ?>
-
-    <?php if (isset($_GET['message'])): ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <?php echo htmlspecialchars($_GET['message']); ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <?php endif; ?>
-
     <div class="row g-4">
         <?php foreach ($chambres as $chambre): ?>
             <div class="col-md-6 col-lg-4">
@@ -40,9 +26,13 @@ $chambres = $chambreModel->getAllChambres();
                         <p class="card-text"><strong>Prix:</strong> <?= number_format($chambre['Prix'], 2, ',', ' '); ?> € par nuit</p>
                     </div>
                     <div class="card-footer">
-                        <a href="/ppe/Vue/User/UserChambresDetails.php?chambre_id=<?= $chambre['ID_Chambres']; ?>" class="btn btn-primary w-100">
-                            <i class="bi bi-info-circle"></i> Voir Détails
-                        </a>
+                        <p>Veuillez vous connecter pour voir les détails ou faire une réservation <a href="./index.php?page=authLogin">ici</a></p>
+                        
+                        <?php if (isset($_SESSION['user'])): ?>
+                            <a href="/ppe/Vue/User/UserChambresDetails.php?chambre_id=<?= $chambre['ID_Chambres']; ?>" class="btn btn-primary w-100">
+                                <i class="bi bi-info-circle"></i> Voir Détails
+                            </a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

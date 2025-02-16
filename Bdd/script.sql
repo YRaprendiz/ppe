@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS Reservations (
     ID_Chambres INT NOT NULL,
     Date_Debut DATE NOT NULL,
     Date_Fin DATE NOT NULL,
+    prixTotal DECIMAL(10,2) NOT NULL,
     Statut_Reservation ENUM('En attente', 'Confirmée', 'Annulée') NOT NULL DEFAULT 'En attente',
     PRIMARY KEY (ID_Reservation),
     FOREIGN KEY (ID_Utilisateur) REFERENCES Utilisateurs(ID_Utilisateur),

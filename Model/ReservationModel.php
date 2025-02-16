@@ -9,8 +9,8 @@ class ReservationModel {
     public function createReservation($userId, $chambreId, $dateDebut, $dateFin, $prixTotal) {
         try {
             $req = $this->bdd->prepare("
-                INSERT INTO Reservations (ID_Utilisateur, ID_Chambres, Date_Debut, Date_Fin, Prix_Total, Statut_Reservation)
-                VALUES (:user_id, :chambre_id, :date_debut, :date_fin, :prix_total, 'En attente')
+                INSERT INTO Reservations (ID_Utilisateur, ID_Chambres, Date_Debut, Date_Fin, Prix, Statut_Reservation)
+                VALUES (:user_id, :chambre_id, :date_debut, :date_fin, :prix, 'En attente')
             ");
 
             return $req->execute([
@@ -18,7 +18,7 @@ class ReservationModel {
                 ':chambre_id' => $chambreId,
                 ':date_debut' => $dateDebut,
                 ':date_fin' => $dateFin,
-                ':prix_total' => $prixTotal
+                ':prix' => $prixTotal
             ]);
         } catch (PDOException $e) {
             error_log("Error creating reservation: " . $e->getMessage());

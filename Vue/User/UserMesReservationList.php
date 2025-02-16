@@ -4,7 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require_once(__DIR__ . '/../../Bdd/bdd.php');
-require_once(__DIR__ . '/../../Model/ReservationModel.php');
+require_once(__DIR__ . '/../../Model/UserReservationModel.php');
 
 // Check if user is logged in
 if (!isset($_SESSION['user'])) {
@@ -12,8 +12,8 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-$reservationModel = new ReservationModel($bdd);
-$reservations = $reservationModel->getReservationsByUser($_SESSION['user']['ID_Utilisateur']);
+$UserReservationModel = new ReservationModel($bdd);
+$reservations = $UserReservationModel->getReservationsByUser($_SESSION['user']['ID_Utilisateur']);
 ?>
 
 <?php include('/xampp/htdocs/ppe/Vue/Header.php'); ?>
@@ -58,7 +58,7 @@ $reservations = $reservationModel->getReservationsByUser($_SESSION['user']['ID_U
                                     <li class="list-group-item">
                                         <i class="bi bi-cash"></i>
                                         <strong>Prix Total:</strong> 
-                                        <?php echo number_format($reservation['Prix_Total'], 2, ',', ' '); ?> €
+                                        <?php echo number_format($reservation['Prix'], 2, ',', ' '); ?> €
                                     </li>
                                 </ul>
                             </div>

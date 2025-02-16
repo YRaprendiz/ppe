@@ -15,10 +15,10 @@ if (!isset($_GET['chambre_id'])) {
 
 require_once(__DIR__ . '/../../Bdd/bdd.php');
 require_once(__DIR__ . '/../../Model/ChambresModel.php');
-require_once(__DIR__ . '/../../Model/ReservationModel.php');
+require_once(__DIR__ . '/../../Model/UserReservationModel.php');
 
 $chambreModel = new ChambresModel($bdd);
-$reservationModel = new ReservationModel($bdd);
+$UserReservationModel = new UserReservationModel($bdd);
 
 $chambre = $chambreModel->getChambreById($_GET['chambre_id']);
 $photos = $chambreModel->getPhotosByChambreId($_GET['chambre_id']);
@@ -94,7 +94,7 @@ if (!$chambre['Statut']) {
 
                 <div class="mb-3">
                     <label class="form-label">Prix total</label>
-                    <div id="prix_total" class="form-control-plaintext">
+                    <div id="prix" class="form-control-plaintext">
                         -- €
                     </div>
                 </div>
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const dateDebut = document.getElementById('date_debut');
     const dateFin = document.getElementById('date_fin');
     const prixParNuit = <?= $chambre['Prix'] ?>;
-    const prixTotalElement = document.getElementById('prix_total');
+    const prixTotalElement = document.getElementById('prix');
 
     function updatePrixTotal() {
         if (dateDebut.value && dateFin.value) {
