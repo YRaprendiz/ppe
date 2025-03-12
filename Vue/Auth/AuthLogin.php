@@ -14,7 +14,7 @@ if (isset($_SESSION['user'])) {
 // Error messages
 $error_messages = [
     'missing_fields' => 'Veuillez remplir tous les champs',
-    'invalid_credentials' => 'Email ou mot de passe incorrect. <p class="text-center">Pas encore inscrit? <a href="/ppe/index.php?page=authInscription">Créez un compte ici</a></p>',
+    'invalid_credentials' => 'Email ou mot de passe incorrect. Pas encore inscrit? Créez un compte pour se conecter e fair unne reservation',
     'system' => 'Une erreur système est survenue'
 ];
 ?>
@@ -49,3 +49,46 @@ $error_messages = [
         </div>
     </div>
 <?php include('./Vue/footer.php'); ?>
+
+<?php
+// Database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "ppe"; // Replace with your actual database name
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch data from Utilisateurs table
+$sql = "SELECT ID_Utilisateur, Nom, Prenom, Email, User_role FROM Utilisateurs";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    echo '<div class="container mt-5">';
+    echo '<h2 class="text-center">Liste des Utilisateurs</h2>';
+    echo '<table class="table table-bordered">';
+    echo '<thead><tr><th>ID</th><th>Nom</th><th>Prénom</th><th>Email</th><th>Rôle</th></tr></thead>';
+    echo '<tbody>';
+    while($row = $result->fetch_assoc()) {
+        echo '<tr>';
+        echo '<td>' . htmlspecialchars($row["ID_Utilisateur"]) . '</td>';
+        echo '<td>' . htmlspecialchars($row["Nom"]) . '</td>';
+        echo '<td>' . htmlspecialchars($row["Prenom"]) . '</td>';
+        echo '<td>' . htmlspecialchars($row["Email"]) . '</td>';
+        echo '<td>' . htmlspecialchars($row["User_role"]) . '</td>';
+        echo '</tr>';
+    }
+    echo '</tbody>';
+    echo '</table>';
+    echo '</div>';
+} else {
+    echo "0 results";
+}
+
+$conn->close();
+?>

@@ -23,12 +23,11 @@ CREATE TABLE IF NOT EXISTS Photos (
 
 CREATE TABLE IF NOT EXISTS Chambres (
     ID_Chambres INT NOT NULL AUTO_INCREMENT,
-    Images LONGBLOB NOT NULL,
     Type_Chambre ENUM('Simple', 'Double', 'Triple', 'Suite') NOT NULL,
     Statut ENUM('Disponible', 'Occupée', 'En maintenance') NOT NULL DEFAULT 'Disponible',
     Prix DECIMAL(10,2) NOT NULL,
     Description text DEFAULT 'Toilettes, Lit, Localisation, Parking, Wi-Fi, Déjeuner, Check-in et Check-out horaires',
-    Image longblob NOT NULL,
+    Images LONGBLOB NOT NULL,
     PRIMARY KEY (ID_Chambres)
 );
 
