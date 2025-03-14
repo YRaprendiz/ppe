@@ -1,5 +1,5 @@
 <?php
-class ReservationModel {
+class UserReservationModel {
     private $bdd;
 
     public function __construct($bdd) {

@@ -8,6 +8,17 @@ class AuthModel
         $this->bdd = $bdd;
     }
 
+    // Verifica se o email já está registrado
+    public function isEmailTaken($email)
+    {
+        $stmt = $this->bdd->prepare('SELECT COUNT(*) FROM Utilisateurs WHERE Email = :email');
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        $result = $stmt->fetchColumn();
+        return $result > 0; // Retorna true se o email já estiver registrado
+    }
+    
+
     public function addUser($nom, $prenom, $email, $password, $image = null)
     {
         $hashPassword = password_hash($password, PASSWORD_BCRYPT);

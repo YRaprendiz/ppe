@@ -2,39 +2,6 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-
-// Traitement du formulaire de connexion/déconnexion (logique reprise depuis test.php)
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    try {
-        $bdd = new PDO('mysql:host=localhost;dbname=ppe;charset=utf8', 'root', '', array(
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-        ));
-    } catch(PDOException $e) {
-        die('Erreur de connexion BD : ' . $e->getMessage());
-    }
-
-    if (isset($_POST['admin'])) {
-        $stmt = $bdd->prepare("SELECT * FROM Utilisateurs WHERE ID_Utilisateur = 1");
-        $stmt->execute();
-        $user = $stmt->fetch();
-        $_SESSION['user'] = $user;
-        header("Location: ./index.php");
-        exit;
-    } elseif (isset($_POST['client'])) {
-        $stmt = $bdd->prepare("SELECT * FROM Utilisateurs WHERE ID_Utilisateur = 2");
-        $stmt->execute();
-        $user = $stmt->fetch();
-        $_SESSION['user'] = $user;
-        header("Location: ./index.php");
-        exit;
-    } elseif (isset($_POST['logout'])) {
-        session_unset();
-        session_destroy();
-        header("Location: ./index.php");
-        exit;
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -43,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="/ppe/assets/css/style.css">
+    <link rel="stylesheet" href="/ppe/style.css">
 </head>
 <body>
 
@@ -73,12 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <span class="text-blue fw-bold">
                             <?php echo htmlspecialchars($_SESSION['user']['User_role']); ?> : <?php echo htmlspecialchars($_SESSION['user']['Email']); ?>
                         </span>
-                            <!-- Formulaire de debug pour se connecter en tant qu'Admin (ID 1), Client (ID 2) ou par ID personnalisé -->
-    <div class="container  mt-3"><form method="post">
-                <button type="submit" name="admin" class="btn btn-primary">1-Admin</button>
-                <button type="submit" name="client" class="btn btn-secondary">2-Client</button>
-                <button type="submit" name="logout" class="btn btn-danger">Log</button>
-        </form></div>
                     </div>
                 </li>
             <?php endif; ?>
@@ -95,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </ul>
     </nav>
 
-
+    <?php include 'messages.php'; ?>
 
 </body>
 </html>

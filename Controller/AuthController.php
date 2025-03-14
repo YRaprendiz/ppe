@@ -3,9 +3,7 @@ require_once(__DIR__ . '/../Bdd/bdd.php');
 require_once(__DIR__ . '/../Model/AuthModel.php');
 
 // Start session if not already started
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+if (session_status() === PHP_SESSION_NONE) {session_start();}
 
 if (isset($_POST['action'])) {
     $AuthController = new AuthController($bdd);
@@ -21,7 +19,7 @@ if (isset($_POST['action'])) {
             $AuthController->register();
             break;
         default:
-            header('Location: /ppe/index.php?error=invalid_action');
+            header('Location: /ppe/index.php?page=404&error=invalid_action');
             exit();
     }
 }
@@ -40,6 +38,12 @@ class AuthController
         try {
             if (!isset($_POST['nom']) || !isset($_POST['prenom']) || !isset($_POST['email']) || !isset($_POST['password'])) {
                 header('Location: /ppe/index.php?page=authInscription&error=missing_fields');
+                exit();
+            }
+
+                // Verificar se o email já está registrado
+            if ($this->authModel->isEmailTaken($_POST['email'])) {
+                header('Location: /ppe/index.php?page=authInscription&error=email_exists');
                 exit();
             }
 
@@ -74,7 +78,7 @@ class AuthController
             }
         } catch (Exception $e) {
             error_log("Registration error: " . $e->getMessage());
-            header('Location: /ppe/index.php?page=404&error=system');
+            header('Location: /ppe/index.php??page=authInscription&error=system');
             exit();
         }
     }
@@ -100,7 +104,7 @@ class AuthController
             }
         } catch (Exception $e) {
             error_log("Login error: " . $e->getMessage());
-            header('Location: /ppe/index.php?page=authLogin&error=system');
+          header('Location: /ppe/index.php?page=authLogin&error=system');
             exit();
         }
     }

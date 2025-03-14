@@ -12,6 +12,9 @@ if (isset($_GET['error']) && $_GET['error'] == 'invalid_action') {
 
 switch ($page) {
 // VuePublic
+    case 'test':
+        include('test.php');
+        break;
     case '404':
         include('404.php');
         break;
